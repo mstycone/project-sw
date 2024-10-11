@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style-sw/style.css" type="text/css">
+  <title>Ajout Transactions</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="add-transac.html">Ajouter une transaction</a>
+      <a href="transac.html">Voir les transactions</a>
+      <a href="visualisation.html">Visualisation</a>
+    </nav>
+  </header>
+
+  <main>
+    <form id="transac-form">
+      <div>
+        <label for="type">Type :</label>
+        <select id="type" name="type">
+          <option value="revenue">Revenu</option>
+          <option value="depense">Dépense</option>
+        </select>
+      </div>
+      <div>
+        <label for="categorie">Catégorie :</label>
+        <input type="text" id="categorie" name="categorie" required>
+      </div>
+
+      <div>
+        <label for="montant">Montant :</label>
+        <input type="number" id="montant" name="montant" required>
+      </div>
+
+      <button type="submit">Ajouter la transaction</button>
+    </form>
+  </main>
+</body>
+</html>
