@@ -24,7 +24,7 @@
           <th>Description</th>
           <th>Montant</th>
           <th>Type</th>
-          <th>Action</th> <!-- Colonne pour le bouton de suppression -->
+          <th>Actions</th> <!-- Colonne pour les boutons de suppression et modification -->
         </tr>
       </thead>
       <tbody id="transac-list">
@@ -62,9 +62,70 @@
                 typeCell.textContent = transaction.type;
                 row.appendChild(typeCell);
 
-                // Ajouter le bouton de suppression
+                // Ajouter les boutons de suppression et modification
                 let actionCell = document.createElement("td");
+
+                // Bouton Modifier
+                let editBtn = document.createElement("button");
+                editBtn.setAttribute("class", "button-add-transac");
+                editBtn.textContent = "Modifier";
+                editBtn.addEventListener("click", function() {
+                    // Remplacer les cellules par des champs de saisie pour modification
+                    descCell.innerHTML = `<input type="text" value="${transaction.categorie}" id="edit-categorie-${index}">`;
+                    montantCell.innerHTML = `<input type="number" value="${transaction.montant}" id="edit-montant-${index}">`;
+                    typeCell.innerHTML = `
+                        <select id="edit-type-${index}">
+                            <option value="revenue" ${transaction.type === 'revenue' ? 'selected' : ''}>Revenu</option>
+                            <option value="depense" ${transaction.type === 'depense' ? 'selected' : ''}>Dépense</option>
+                        </select>`;
+
+                    // Remplacer le bouton Modifier par un bouton Sauvegarder
+                    editBtn.style.display = "none"; // Cacher le bouton Modifier
+                    let saveBtn = document.createElement("button");
+                    saveBtn.setAttribute("class", "button-add-transac");
+                    saveBtn.textContent = "Sauvegarder";
+                    actionCell.appendChild(saveBtn);
+
+                    saveBtn.addEventListener("click", function() {
+                        // Récupérer les nouvelles valeurs des champs
+                        let newCategorie = document.getElementById(`edit-categorie-${index}`).value;
+                        let newMontant = parseFloat(document.getElementById(`edit-montant-${index}`).value);
+                        let newType = document.getElementById(`edit-type-${index}`).value;
+
+                        // Mettre à jour la transaction dans le tableau et dans localStorage
+                        transactions[index] = {
+                            categorie: newCategorie,
+                            montant: newMontant,
+                            type: newType
+                        };
+
+                        localStorage.setItem("transactions", JSON.stringify(transactions)); // Mettre à jour localStorage
+                        location.reload(); // Recharger la page pour refléter les changements
+                    });
+
+                    //Ajout un bouton 'Annuler'
+                    let cancelBtn = document.createElement("button");
+                    cancelBtn.setAttribute("class", "button-add-transac");
+                    cancelBtn.textContent = "Annuler";
+                    actionCell.appendChild(cancelBtn);
+
+                    //Reprend les valeurs de bases 
+                    cancelBtn.addEventListener("click", function() {
+                      descCell.innerHTML = transaction.categorie; 
+                      montantCell.innerHTML = transaction.montant.toFixed(2) + " €";
+                      typeCell.innerHTML = transaction.type;
+
+                      //Réafficher les boutons de départ 
+                      editBtn.style.display = "inline";
+                      saveBtn.remove();
+                      cancelBtn.remove();
+                    });
+                });
+                actionCell.appendChild(editBtn);
+
+                // Bouton Supprimer
                 let deleteBtn = document.createElement("button");
+                deleteBtn.setAttribute("class", "button-add-transac");
                 deleteBtn.textContent = "Supprimer";
                 deleteBtn.addEventListener("click", function() {
                     transactions.splice(index, 1); // Supprimer la transaction de la liste
@@ -72,8 +133,8 @@
                     location.reload(); // Recharger la page pour mettre à jour la liste
                 });
                 actionCell.appendChild(deleteBtn);
-                row.appendChild(actionCell);
 
+                row.appendChild(actionCell);
                 transacList.appendChild(row);
             });
         }
