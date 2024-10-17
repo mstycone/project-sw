@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style-sw/style.css" type="text/css">
+  <title>Liste des Transactions</title>
+</head>
+<body>
+  <header>
+    <h1>Liste des Transactions</h1>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="add-transac.html">Ajouter une transaction</a>
+      <a href="transac.html" class="active">Voir les transactions</a>
+      <a href="visualisation.html">Visualisation</a>
+    </nav>
+  </header>
+
+  <main>
+    <table>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Montant</th>
+          <th>Type</th>
+          <th>Action</th> <!-- Colonne pour le bouton de suppression -->
+        </tr>
+      </thead>
+      <tbody id="transac-list">
+        <!-- Transactions dynamiques -->
+      </tbody>
+    </table>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+
+        let transacList = document.getElementById("transac-list");
+
+        if (transactions.length === 0) {
+            let emptyRow = document.createElement("tr");
+            let emptyCell = document.createElement("td");
+            emptyCell.setAttribute("colspan", 4); // Fusionne les colonnes
+            emptyCell.textContent = "Aucune transaction à afficher";
+            emptyRow.appendChild(emptyCell);
+            transacList.appendChild(emptyRow);
+        } else {
+            transactions.forEach(function(transaction, index) {
+                let row = document.createElement("tr");
+
+                let descCell = document.createElement("td");
+                descCell.textContent = transaction.categorie;
+                row.appendChild(descCell);
+
+                let montantCell = document.createElement("td");
+                montantCell.textContent = transaction.montant.toFixed(2) + " €";
+                row.appendChild(montantCell);
+
+                let typeCell = document.createElement("td");
+                typeCell.textContent = transaction.type;
+                row.appendChild(typeCell);
+
+                // Ajouter le bouton de suppression
+                let actionCell = document.createElement("td");
+                let deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "Supprimer";
+                deleteBtn.addEventListener("click", function() {
+                    transactions.splice(index, 1); // Supprimer la transaction de la liste
+                    localStorage.setItem("transactions", JSON.stringify(transactions)); // Mettre à jour le localStorage
+                    location.reload(); // Recharger la page pour mettre à jour la liste
+                });
+                actionCell.appendChild(deleteBtn);
+                row.appendChild(actionCell);
+
+                transacList.appendChild(row);
+            });
+        }
+    });
+  </script>
+</body>
+</html>

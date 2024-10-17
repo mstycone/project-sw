@@ -1,5 +1,3 @@
-**ABOU-BACAR Arnaud **
-
 <h1><div style="text-align:center;">Charte Graphique</div></h1>
 
 
@@ -64,10 +62,3 @@
   - Espacement entre les éléments : 15px à 30px selon le type d'élément
 - **Responsive Design :**
   - Adaptable aux écrans de bureau et mobile (optionnel) avec des ajustements de taille et d'espacement.
-
-#### 7. **Exemples d’Applications**
-
-- **Page d'Accueil :**
-  Afficher un tableau de bord avec un graphique circulaire des dépenses, fond blanc et des éléments interactifs en vert menthe. "Spendwise" en bleu marine avec "wise" en vert menthe dans l'en-tête.
-- **Formulaires :**
-  Champs de formulaire avec bordures bleu marine, étiquettes en bleu marine et boutons en vert menthe.

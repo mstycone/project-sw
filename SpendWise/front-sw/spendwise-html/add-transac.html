@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style-sw/style.css" type="text/css">
+  <title>Ajout Transactions</title>
+</head>
+<body>
+  <header>
+    <h1>Ajout Transactions</h1>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="add-transac.html" class="active">Ajouter une transaction</a>
+      <a href="transac.html">Voir les transactions</a>
+      <a href="visualisation.html">Visualisation</a>
+    </nav>
+  </header>
+
+  <main>
+    <form id="transac-form">
+      <div class="form-group">
+        <label for="type">Type :</label>
+        <select id="type" name="type">
+          <option value="">--Choisir type transaction--</option>
+          <option value="revenue">Revenu</option>
+          <option value="depense">Dépense</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="categorie">Catégorie :</label>
+        <input type="text" id="categorie" name="categorie" required>
+      </div>
+
+      <div  class="form-group">
+        <label for="montant">Montant :</label>
+        <input type="number" id="montant" name="montant" required>
+      </div>
+
+      <button type="submit">Ajouter la transaction</button>
+    </form>
+
+    <!-- Message de confirmation -->
+   <!--<p id="feedback" style="display:none; color:green;">Transaction ajoutée avec succès !</p>-->
+  </main>
+
+  <script>
+  // Ajout de cette fonction dans le script de add-transac.html
+
+  document.getElementById('transac-form').addEventListener('submit', function (event) {
+      event.preventDefault(); // Empêche le rechargement de la page
+
+      const type = document.getElementById('type').value;
+      const categorie = document.getElementById('categorie').value;
+      const montant = parseFloat(document.getElementById('montant').value);
+
+      // Créer un objet de transaction
+      const transaction = {
+          type,
+          categorie,
+          montant
+      };
+
+      // Récupérer les transactions existantes ou créer un tableau vide
+      const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+
+      // Ajouter la nouvelle transaction
+      transactions.push(transaction);
+
+      // Enregistrer à nouveau les transactions dans le local storage
+      localStorage.setItem('transactions', JSON.stringify(transactions));
+
+      // Réinitialiser le formulaire
+      this.reset();
+  });
+
+  </script>
+</body>
+</html>

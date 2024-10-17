@@ -7,9 +7,12 @@
     <title>Connexion</title>
     <link rel="stylesheet" href="" type="text/css" >
 </head>
-<body>
-    <div class="container">
-        <h1>Connexion</h1>
+<body id="connexion">
+    <div>
+        <h1>SPENDWISE</h1>
+    </div>
+    <div class="connexion">
+        <h2>Connexion</h2>
         <form method="post">
             <label for="username">Nom d'utilisateur :</label>
             <input type="text" id="username" name="username" required>
@@ -17,15 +20,15 @@
             <label for="password">Mot de passe :</label>
             <input type="password" id="password" name="password" required>
 
-            <button type="submit">Se connecter</button>
+            <button class="connexion" type="submit">Se connecter</button>
         </form>
     </div>
 
     <div>
-      <button type="button" >Se connecter</button>
-      <button type="button" >S'inscrire</button>
+      <button class="connexion" type="button" >Se connecter</button>
+      <button  class="connexion" type="button" >S'inscrire</button>
     </div>
 
-    <script src=""></script>
+    <script src="../scripts-sw/script.js"></script>
 </body>
 </html>
