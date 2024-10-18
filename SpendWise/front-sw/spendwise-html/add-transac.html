@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8"> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../style-sw/style.css" type="text/css">
   <title>SpendWise - Ajout Transactions</title>
@@ -42,13 +42,12 @@
     </form>
 
     <!-- Message de confirmation -->
-   <!--<p id="feedback" style="display:none; color:green;">Transaction ajoutée avec succès !</p>-->
+    <p id="feedback">Transaction ajoutée avec succès !</p>
   </main>
 
   <script>
-  // Ajout de cette fonction dans le script de add-transac.html
 
-  document.getElementById('transac-form').addEventListener('submit', function (event) {
+    document.getElementById('transac-form').addEventListener('submit', function (event) {
       event.preventDefault(); // Empêche le rechargement de la page
 
       const type = document.getElementById('type').value;
@@ -57,9 +56,9 @@
 
       // Créer un objet de transaction
       const transaction = {
-          type,
-          categorie,
-          montant
+        type,
+        categorie,
+        montant
       };
 
       // Récupérer les transactions existantes ou créer un tableau vide
@@ -73,7 +72,17 @@
 
       // Réinitialiser le formulaire
       this.reset();
-  });
+
+      //Affiche message confirmation dans <p>
+      const feedback = document.getElementById('feedback');
+      feedback.style.display = 'block';
+
+      //Cacher le message après un certain temps 
+      setTimeout(function() {
+        feedback.style.display = 'none';
+      },3000);
+  
+    })
 
   </script>
 </body>
