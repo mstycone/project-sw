@@ -22,15 +22,51 @@ nav a {
   color: white;
   text-decoration: none;
 }
-  
+
+nav a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+nav a:active {
+  color: #002D72;
+}
+
 h1 {
   color: #002D72; 
 }
 
+div h1 {
+  margin-left: 20px;
+}
+
 h2 {
   color: #3EB489;
+  margin-bottom: 30px;
 }
-  
+
+div h2 {
+  text-align: center;
+}
+
+div.connexion {
+  padding: 40px;
+  margin: 100px auto; /* Centre le formulaire verticalement et horizontalement */
+  color: white;
+  background-color: #033279;
+  border: 1px solid white;
+  border-radius: 8px;
+  max-width: 500px; /* Limite la largeur du conteneur du formulaire */
+}
+
+.title-sw-green {
+  color: #3EB489;
+}
+
+.title-sw-white {
+  color: white;
+}
+
 main {
   padding: 20px;
 }
@@ -58,6 +94,10 @@ input, select {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
+}
+
+#type, #categorie, #montant {
+  text-align: center;
 }
 
 form div {
@@ -107,13 +147,19 @@ canvas {
   text-decoration: underline;
 }
 
-button {
+button, #subscribe {
   padding: 10px;
   background-color: #3EB489;
   color: white;
   border: none;
   border-radius: 4px;
   width: 100%;
+}
+
+#submit:hover, #subscribe:hover, button.connexion:hover {
+  background-color: white;
+  color: #3EB489;
+  border: 1px solid #3EB489;
 }
 
 button.connexion {
@@ -123,6 +169,7 @@ button.connexion {
   color: white;
   border: none;
   border-radius: 40px;
+  cursor: pointer;
 }
   
 div.connexion {
@@ -134,6 +181,28 @@ div.connexion {
   border-radius: 4px;
 }
 
+form.connexion {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: auto; /* Centre le formulaire horizontalement */
+  padding: 20px;
+  border-radius: 8px; /* Ajoute des coins arrondis */
+}
+
+label.connexion {
+  margin-bottom: 5px; /* Espace entre le label et le champ */
+  color: white; /* Couleur des labels */
+}
+
+input.connexion {
+  padding: 10px;
+  margin-bottom: 20px; /* Espace entre les champs de formulaire */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%; /* Assure que l'input prenne toute la largeur du formulaire */
+  box-sizing: border-box; /* Assure que padding et border ne dépassent pas la largeur */
+}
 
 table {
   width: 100%;
@@ -152,9 +221,11 @@ th, td {
   
 th {
   background-color: #f4f4f4;
+  text-align: center;
 }
 
 footer {
   margin: 70px 50px 20px 50px;
+  color: #002D72;
 }
   
