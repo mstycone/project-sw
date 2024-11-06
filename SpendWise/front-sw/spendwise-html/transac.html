@@ -24,6 +24,7 @@
           <th>Description</th>
           <th>Montant</th>
           <th>Type</th>
+          <th>Date</th>
           <th>Actions</th> <!-- Colonne pour les boutons de suppression et modification -->
         </tr>
       </thead>
@@ -42,7 +43,7 @@
       if (transactions.length === 0) {
         let emptyRow = document.createElement("tr");
         let emptyCell = document.createElement("td");
-        emptyCell.setAttribute("colspan", 4); // Fusionne les colonnes
+        emptyCell.setAttribute("colspan", 5); // Fusionne les colonnes
         emptyCell.textContent = "Aucune transaction à afficher";
         emptyRow.appendChild(emptyCell);
         transacList.appendChild(emptyRow);
@@ -62,6 +63,10 @@
               typeCell.textContent = transaction.type;
               row.appendChild(typeCell);
 
+              let dateCell = document.createElement("td");
+              dateCell.textContent = transaction.date;
+              row.appendChild(dateCell);
+
               // Ajouter les boutons de suppression et modification
               let actionCell = document.createElement("td");
 
@@ -75,9 +80,10 @@
                 montantCell.innerHTML = `<input type="number" value="${transaction.montant}" id="edit-montant-${index}">`;
                 typeCell.innerHTML = `
                   <select id="edit-type-${index}">
-                    <option value="revenue" ${transaction.type === 'revenue' ? 'selected' : ''}>Revenu</option>
+                    <option value="revenu" ${transaction.type === 'revenu' ? 'selected' : ''}>Revenu</option>
                     <option value="depense" ${transaction.type === 'depense' ? 'selected' : ''}>Dépense</option>
                   </select>`;
+                dateCell.innerHTML = `<input type="date" id="edit-date-${index}" value="${transaction.date}">`;
 
                 // Remplacer le bouton Modifier par un bouton Sauvegarder
                 editBtn.style.display = "none"; // Cacher le bouton Modifier
@@ -93,12 +99,14 @@
                     let newCategorie = document.getElementById(`edit-categorie-${index}`).value;
                     let newMontant = parseFloat(document.getElementById(`edit-montant-${index}`).value);
                     let newType = document.getElementById(`edit-type-${index}`).value;
+                    let newDate = document.getElementById(`edit-date-${index}`).value;
 
                     // Mettre à jour la transaction dans le tableau et dans localStorage
                     transactions[index] = {
                       categorie: newCategorie,
                       montant: newMontant,
-                      type: newType
+                      type: newType,
+                      date: newDate
                     };
                     localStorage.setItem("transactions", JSON.stringify(transactions)); // Mettre à jour localStorage
                     location.reload(); // Recharger la page pour refléter les changements
@@ -116,6 +124,7 @@
                   descCell.innerHTML = transaction.categorie; 
                   montantCell.innerHTML = transaction.montant.toFixed(2) + " €";
                   typeCell.innerHTML = transaction.type;
+                  dateCell.innerHTML = transaction.date;
 
                   //Réafficher les boutons de départ 
                   editBtn.style.display = "inline";

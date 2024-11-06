@@ -25,7 +25,7 @@
     <section>
       <h3>Résumé des transactions</h3>
       <ul id="resume">
-        <li>Revenu : <span id="revenue-total">0 €</span></li>
+        <li>Revenu : <span id="revenu-total">0 €</span></li>
         <li>Dépense : <span id="depense-total">0 €</span></li>
       </ul>
     </section>
@@ -48,7 +48,7 @@
 
         // Calculer les totaux des revenus et dépenses
         transactions.forEach(transaction => {
-            if (transaction.type === 'revenue') {
+            if (transaction.type === 'revenu') {
                 revenueTotal += transaction.montant;
             } else if (transaction.type === 'depense') {
                 depenseTotal += transaction.montant;
@@ -60,7 +60,7 @@
 
         // Mettre à jour le DOM
         document.getElementById('solde').textContent = `${solde} €`;
-        document.getElementById('revenue-total').textContent = `${revenueTotal} €`;
+        document.getElementById('revenu-total').textContent = `${revenueTotal} €`;
         document.getElementById('depense-total').textContent = `${depenseTotal} €`;
     }
 
