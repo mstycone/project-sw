@@ -43,9 +43,13 @@ Documentation sur Express : sources :
 
 Documentation <a href="https://developer.mozilla.org/fr/docs/Learn/Server-side/Express_Nodejs">MDN</a> : 
 
-- visualisation structure 
+- visualisation syntaxe node 
 - lecture de la doc sur le `express generator` 
 - Etc 
 
-Doc <a href="https://expressjs.com/fr/guide/writing-middleware.html">Express : ecriture des middlewares</a> 
+Doc Express officiel : 
+
+- <a href="https://expressjs.com/fr/guide/writing-middleware.html">Express : ecriture des middlewares</a> 
+
+
 
