@@ -1,5 +1,5 @@
 const express = require("express");
-const connectDB = require('./db');
+const connectDB = require('./sw-db');
 
 const app = express();
 
@@ -7,7 +7,7 @@ const app = express();
 connectDB();
 
 //middleware et routes 
-const port = 3000;
+const port = 8000;
 
 app.listen(port, () => {
   console.log(`Le serveur écoute sur le port : ${port}!`);
