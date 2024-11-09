@@ -6,9 +6,9 @@ const transacSchema = new mongoose.Schema({
     categorie: {type: String, required: true}, 
     amount:{type: Number, required: true},
     date: {type: Date, default: Date.now},
-    description: {type: String},
+    description: {type: String}, //optionnelle 
 }); 
 
-const transactions = mongoose.model('transactions', transacSchema);
+const transaction = mongoose.model('transaction', transacSchema);
 
-module.exports = transactions;
+module.exports = transaction;
