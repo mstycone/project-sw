@@ -103,23 +103,23 @@ Voici la structure des fichiers du projet :
 ```
 spendwise/
 │
-├── controllers/  # Contient la logique des routes (ajouter, modifier, etc.)
+├── controllers/ 
 │   └── transactions.js
 │
-├── models/  # Définit les schémas Mongoose pour la base de données
+├── models/  
 │   └── transactions.js
 │
-├── routes/  # Définit les routes pour les transactions
+├── routes/  
 │   └── transactions.js
 │
-├── public/  # Contient les fichiers statiques (HTML, CSS, JS)
+├── public/
 │   ├── index.html
 │   ├── add-transac.html
 │   └── visualisation.html
 │
-├── app.js   			# Le fichier principal du serveur
-├── package.json  # Dépendances du projet
-└── .gitignore    # Liste des fichiers à ignorer par Git
+├── app.js   			
+├── package.json  
+└── .gitignore    
 ```
 
 ## Aperçu 
