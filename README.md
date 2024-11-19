@@ -128,7 +128,7 @@ Ajoutez des captures d'écran pertinentes pour illustrer les fonctionnalités cl
 
 1. **Page d'accueil (index.html)** :
 
-   ![cap-accueil](/Users/arnaudabou-bacar/Desktop/me/BTS SIO/2nd Year /Cours BTSIO2/Projets BTS SIO/Projet S3/Wireframe_Projet S3/cap-accueil.png)
+   <img src="./Wireframe_Projet S3/cap-accueil.png">
 
 2. **Ajouter une transaction (add-transac.html)** :
 
