@@ -132,14 +132,14 @@ Ajoutez des captures d'écran pertinentes pour illustrer les fonctionnalités cl
 
 2. **Ajouter une transaction (add-transac.html)** :
 
-   ![cap-add-transaction](/Users/arnaudabou-bacar/Desktop/me/BTS SIO/2nd Year /Cours BTSIO2/Projets BTS SIO/Projet S3/Wireframe_Projet S3/cap-add-transaction.png)
+   <img src="./Wireframe_Projet S3/cap-add-transaction.png">
 
 3. **Voir les transactions (transac.html)** :
 
-   ![cap-transaction](/Users/arnaudabou-bacar/Desktop/me/BTS SIO/2nd Year /Cours BTSIO2/Projets BTS SIO/Projet S3/Wireframe_Projet S3/cap-transaction.png)
+   <img src="./Wireframe_Projet S3/cap-transaction.png">
 
 4. **Visualisation des graphiques (visualisation.html)** :
 
-   ![cap-visualisation](/Users/arnaudabou-bacar/Desktop/me/BTS SIO/2nd Year /Cours BTSIO2/Projets BTS SIO/Projet S3/Wireframe_Projet S3/cap-visualisation.png)
+   <img src="./Wireframe_Projet S3/cap-visualisation.png">
 
    
