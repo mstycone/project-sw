@@ -122,9 +122,9 @@ spendwise/
 └── .gitignore    # Liste des fichiers à ignorer par Git
 ```
 
-## Captures d'écran
+## Aperçu 
 
-Ajoutez des captures d'écran pertinentes pour illustrer les fonctionnalités clés de l'application. Par exemple :
+Voici un aperçu de l'application :
 
 1. **Page d'accueil (index.html)** :
 
