@@ -149,9 +149,9 @@ Les tests manuels ont été effectués pour vérifier le bon fonctionnement des 
 - Ajouter, modifier, et supprimer des transactions.
 - Vérifier la validité des graphiques (revenus et dépenses).
 
-### **b. Tests unitaires** (si applicable)
+### **b. Tests unitaires** (à voir)
 
-Si tu as écrit des tests unitaires (par exemple avec Jest ou Mocha), il est important de mentionner ici comment les exécuter.
+À mentionner 
 
 
 
@@ -175,7 +175,7 @@ Si tu as écrit des tests unitaires (par exemple avec Jest ou Mocha), il est imp
 
 2. **Erreur lors de la modification et suppression : **
 
-   Source : l'`id` de la transaction n'est pas défini. Il est possible que j'ai mal configurer la requête PUT. 
+   $Source : l'`id` de la transaction n'est pas défini. Il est possible que j'ai mal configurer la requête PUT. 
 
    J'ai constaté que sous MongoDB, l'`id`  est stocké sous le nom `_id`. Or dans mon fichier je les mis sous cette forme `.id` .
 
@@ -197,9 +197,11 @@ Si tu as écrit des tests unitaires (par exemple avec Jest ou Mocha), il est imp
 
    ![cap-succesful-del-req](/Users/arnaudabou-bacar/Desktop/me/BTS SIO/2nd Year /Cours BTSIO2/Projets BTS SIO/Projet S3/Image_ProjetS3/cap-succesful-del-req.png)
 
+3. **Formater la date sans la timezone ni l'heure :**
+
    
 
-
+4. Autre
 
 ## **10. Conclusion et perspectives**
 
