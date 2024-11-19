@@ -71,7 +71,7 @@ Conformément à notre accord, le développeur est libre de choisir les outils q
 
 
 
-<img src="/Users/arnaudabou-bacar/Desktop/me/BTS SIO/2nd Year /Cours BTSIO2/Projets BTS SIO/Projet S3/Image_ProjetS3/UseCasesDiagram_5.png" alt="use cases diagram" height="300">
+<img src="/Users/arnaudabou-bacar/Desktop/me/BTS SIO/2nd Year /Cours BTSIO2/Projets BTS SIO/Projet S3/Image_ProjetS3/UseCasesDiagram_6.png" alt="use cases diagram" height="300">
 
 > cf Excalidraw.com
 

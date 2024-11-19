@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "express": "^4.21.1",
+    "http-errors": "^2.0.0",
+    "mongoose": "^8.8.2",
+    "morgan": "^1.10.0",
+    "path": "^0.12.7"
+  },
+  "name": "spendwise",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "eslint": "^9.15.0",
+    "nodemon": "^3.1.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js",
+    "serverstart": "DEBUG=spendwise:* npm run dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

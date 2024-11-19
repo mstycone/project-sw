@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style-sw/style.css" type="text/css">
+  <title>SpendWise - Ajout Transactions</title>
+</head>
+<body>
+  <header>
+    <h1>SPEND<span class="title-sw-white">WISE</span></h1>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="add-transac.html" class="active">Ajouter une transaction</a>
+      <a href="transac.html">Voir les transactions</a>
+      <a href="visualisation.html">Visualisation</a>
+    </nav>
+  </header>
+
+  <main>
+    <form id="transac-form">
+      <div class="form-group">
+        <label for="type">Type :</label>
+        <select id="type" name="type">
+          <option value="">--Choisir le type de transaction--</option>
+          <option value="revenu">Revenu</option>
+          <option value="depense">Dépense</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="categorie">Catégorie :</label>
+        <input type="text" id="categorie" name="categorie" placeholder="Exemple : Nourriture" required>
+      </div>
+
+      <div  class="form-group">
+        <label for="montant">Montant :</label>
+        <input type="number" id="montant" step="0.01" name="montant" placeholder="0.00" required>
+      </div>
+
+      <button id="submit" type="submit">Ajouter la transaction</button>
+    </form>
+
+    <!-- Message de confirmation -->
+    <p id="feedback">Transaction ajoutée avec succès !</p>
+  </main>
+
+  <script>
+
+    document.getElementById('transac-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const type = document.getElementById('type').value;
+      const categorie = document.getElementById('categorie').value;
+      const montant = parseFloat(document.getElementById('montant').value.replace(",", "."));
+      //Sauvegarde date en format YYYY-MM-DD - split permet d'enlever l'horaire 
+      const date = new Date().toISOString().split('T')[0];
+
+      
+      // Créer un objet de transaction
+      const transaction = {
+        type,
+        categorie,
+        montant,
+        date
+      };
+      
+      // Envoi de la requête POST au backend pour ajouter une transaction
+      fetch('/transactions', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(transaction)
+      })
+      .then(response => response.json())
+      .then(transactions => {
+        // Réinitialiser le formulaire
+        this.reset();
+
+        //Affiche message confirmation dans <p>
+        const feedback = document.getElementById('feedback');
+        feedback.style.display = 'block';
+
+        //Cacher le message après un certain temps 
+        setTimeout(() => feedback.style.display = 'none',3000);
+      })//Ajout gestionnaire d'erreurs 
+      .catch(error => console.error('Error:', error));
+    });
+
+  </script>
+</body>
+</html>

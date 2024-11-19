@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style-sw/style.css" type="text/css">
+  <title>SpendWise - Accueil</title>
+</head>
+<body>
+  <header>
+    <h1>SPEND<span class="title-sw-white">WISE</span></h1>
+    <nav>
+      <a href="index.html" class="active">Accueil</a>
+      <a href="add-transac.html">Ajouter une transaction</a>
+      <a href="transac.html">Voir les transactions</a>
+      <a href="visualisation.html">Visualisation</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Solde actuel : <span id="solde">0 €</span></h2>
+    </section>
+
+    <section>
+      <h3>Résumé des transactions</h3>
+      <ul id="resume">
+        <li>Revenu : <span id="revenu-total">0 €</span></li>
+        <li>Dépense : <span id="depense-total">0 €</span></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2024 SpendWise. Tous droits réservés.</p>
+  </footer>
+
+  <script>
+    //Utilisation backend et bdd pour les données 
+    document.addEventListener("DOMContentLoaded", function() {
+      fetch('/transactions')  // Récupérer toutes les transactions depuis le backend
+        .then(response => response.json())
+        .then(transactions => {
+          let revenueTotal = 0;
+          let depenseTotal = 0;
+
+
+          // Calculer les totaux des revenus et dépenses
+          transactions.forEach(transaction => {
+            if (transaction.type === 'revenu') {
+                revenueTotal += transaction.montant;
+            } else if (transaction.type === 'depense') {
+                depenseTotal += transaction.montant;
+            }
+          });
+
+          // Calculer le solde
+          const solde = revenueTotal - depenseTotal;
+
+          // Mettre à jour le DOM
+          document.getElementById('solde').textContent = `${solde} €`;
+          document.getElementById('revenu-total').textContent = `${revenueTotal} €`;
+          document.getElementById('depense-total').textContent = `${depenseTotal} €`;
+        });
+    });
+
+  </script>
+</body>
+</html>
