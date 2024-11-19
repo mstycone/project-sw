@@ -20,7 +20,7 @@
 - **Chart.js** : Bibliothèque utilisée pour créer les graphiques (histogrammes et diagrammes circulaires).
 - **LocalStorage** : Utilisé pour stocker les transactions de manière temporaire dans le navigateur de l'utilisateur (Lors des premièrs essaies)
 
-**Backend :** (délaissement du localstorage)
+**Backend :** (abandon du localstorage)
 
 - **Node.js** : Environnement d'exécution côté serveur.
 - **Express.js** : Framework pour construire les API RESTful.
@@ -30,6 +30,7 @@
 **Outils de développement :**
 
 - **Nodemon** : Utilisé pour recharger automatiquement l'application lors de modifications dans le code.
+- **Eslint :** Un outil de développement analysant le code pour détecter les éventuelles erreurs et appliquer des règles de style. Dans l'objectif d'améliorer la qualité et la cohérence du code. 
 - **Postman** : Outil pour tester les API RESTful et vérifier les routes du serveur.
 
 ------
@@ -44,11 +45,19 @@ Le projet se divise en deux principales parties :
 ### **Structure des fichiers :**
 
 - `app.js` : Fichier principal qui lance l’application backend.
+
 - `models/transactions.js` : Modèle Mongoose définissant la structure des transactions dans la base de données.
+
 - `controllers/transactions.js` : Logique métier pour manipuler les transactions (CRUD).
+
 - `routes/transactions.js` : Définition des routes pour chaque opération sur les transactions.
+
 - `public/` : Contient les fichiers statiques (HTML, CSS, JS) pour l’interface utilisateur.
-- `views/` : Si un moteur de template est utilisé, ce dossier peut contenir des fichiers de vue (ex. EJS, Pug).
+
+- `views/` : Si un moteur de template est utilisé, ce dossier peut contenir des fichiers de vue (ex. EJS, Pug). 
+
+  > Note : pour le moment ce n'est pas le cas 
+
 - `package.json` : Gestion des dépendances du projet et des scripts de démarrage.
 
 ------
@@ -118,7 +127,7 @@ L’application génère deux types de graphiques :
    git clone <url_du_projet>
    ```
 
-2. **Installer les dépendances :** Dans le dossier du projet, exécuter la commande suivante pour installer toutes les dépendances nécessaires :
+2. **Installer les dépendances :** Dans le dossier du projet, exécuter la commande suivante pour installer toutes les dépendances nécessaires du projet :
 
    ```bash
    npm install
