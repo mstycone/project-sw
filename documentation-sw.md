@@ -27,11 +27,31 @@
 - **MongoDB** : Base de données NoSQL utilisée pour stocker les transactions.
 - **Mongoose** : Bibliothèque pour interagir avec MongoDB de manière simple et organisée.
 
+**Dépendances installées :**
+
+- **Cookie-parser : ** Permet de lire, analyser et manipuler les cookies envoyés par le client dans les requêtes HTTP.
+- **morgan :**  Enregistre des informations sur chaque requête HTTP dans la console ou un fichier, utile pour le debugging et la surveillance.
+- **path : **Assure la compatibilité des chemins entre différents systèmes d'exploitation
+- **http-errors :** Génère facilement des erreurs avec des codes d'état HTTP (comme 404 ou 500) et des messages personnalisés.
+- **debug : **une librairie pour gérer les logs de débogage dans les applications Node.js. Active ou désactive des logs par namespace.
+- **moment.js :** Un outil facilitant la manipulation des dates et permet de formater de manière précise et plus simple que JavaScript "Vanilla"
+
 **Outils de développement :**
 
 - **Nodemon** : Utilisé pour recharger automatiquement l'application lors de modifications dans le code.
 - **Eslint :** Un outil de développement analysant le code pour détecter les éventuelles erreurs et appliquer des règles de style. Dans l'objectif d'améliorer la qualité et la cohérence du code. 
 - **Postman** : Outil pour tester les API RESTful et vérifier les routes du serveur.
+
+**Ajout d'un script de démarrage `package.json` : **
+
+![cap-script-start](/Users/arnaudabou-bacar/Desktop/me/BTS SIO/2nd Year /Cours BTSIO2/Projets BTS SIO/Projet S3/cap-script-start.png)
+
+<u>Explication</u> :
+
+- `DEBUG=spendwise:*`  : On définit une variable d'environnement `DEBUG`qui active la journalisation des logs pour le namespace `spendwise:*` . Cela permet de filtrer et de montrer les logs uniquement pour ce namespace particulier (utile pour le débogage en développement).
+- `npm run dev` : exécute le `nodemon app.js`. Un outil qui surveille les changements de fichiers dans le projet et redémarre automatiquement le serveur lorsque des modifications sont détectées. Pour une expérience de développement en continue, rapide et fluide sans avoir à redémarrer manuellement le serveur à chaque changement.
+
+
 
 ------
 
@@ -84,19 +104,60 @@ L’application génère deux types de graphiques :
 
 ## **5. Description technique**
 
+<h3>Base de données : MongoDB</h3>
+
+Commandes de démarrage : 
+
+```bash
+#Démarre le service 
+brew services start mongodb-community@8.0
+#Stopper le service : idem avec 
+stop 
+#Exécuter une requete : vérfier la version
+db.version()
+#vérifier si le service mongoDB a démarré 
+brew services list 
+#verifier si mongodb est en cours d'exécution 
+ps aux | grep mongod
+#Se connecter à MongoDB 
+mongosh 
+#Vérifier contenu bdd mongodb
+show dbs 
+use <ma_bdd>
+show collections
+db.maCollection.find() #Afficher le contenu d'une collection
+```
+
+
+
 ### **Backend - Serveur Express :**
 
 1. **Modèle de données (Mongoose) :** Le modèle `Transaction` est défini avec les attributs suivants :
 
    - **type** : Indique si la transaction est un revenu ou une dépense.
-
    - **categorie** : Catégorie de la transaction (ex. alimentation, loisirs, etc.).
-
    - **montant** : Montant de la transaction.
-
    - **date** : Date de la transaction, avec une valeur par défaut (date actuelle).
 
-     ![cap-models-transac](/Users/arnaudabou-bacar/Desktop/me/BTS SIO/2nd Year /Cours BTSIO2/Projets BTS SIO/Projet S3/Image_ProjetS3/cap-models-transac.png)
+   <img src="./Image_ProjetS3/cap-models-transac.png">
+
+   Ajout d'un middleware pour formater la date avant l'enregistrement : 
+
+   ```js
+   //const TransacSchema 
+   
+   //Middleware formater date pré-enregistrement 
+   TransacSchema.pre('save', function(next) {
+       this.date = new Date(this.date.toISOString().split('T')[0]); // Garder uniquement la date (YYYY-MM-DD)
+       next();
+   });
+   
+   //module.exports
+   ```
+
+   
+
+   
 
 2. **Routes du serveur (Express)** : Les routes définissent les actions permettant de manipuler les transactions :
 
@@ -170,15 +231,15 @@ Les tests manuels ont été effectués pour vérifier le bon fonctionnement des 
 
    Source du problème : l'option `enum` dans le fichier `models/transactions` ne reconnaissait pas le type "revenue" comme valeur :
 
-   ![cap-error-addtransac](/Users/arnaudabou-bacar/Desktop/me/BTS SIO/2nd Year /Cours BTSIO2/Projets BTS SIO/Projet S3/Image_ProjetS3/cap-error-addtransac.png)
+   <img src="./Image_ProjetS3/cap-error-addtransac.png">
 
    > Note : <span style="color: red;">**Importance**</span> de bien configurer le code pour afficher les erreurs 
    >
-   > ![Capture d’écran 2024-11-19 à 12.05.14](/Users/arnaudabou-bacar/Desktop/me/BTS SIO/2nd Year /Cours BTSIO2/Projets BTS SIO/Projet S3/Image_ProjetS3/Capture d’écran 2024-11-19 à 12.05.14.png)
+   > <img src="./Image_ProjetS3/Capture d’écran 2024-11-19 à 12.05.14.png">
 
    Solution : j'ai élargi les valeurs acceptées par `enum` 
 
-   ![cap-update-enum-option](/Users/arnaudabou-bacar/Desktop/me/BTS SIO/2nd Year /Cours BTSIO2/Projets BTS SIO/Projet S3/Image_ProjetS3/cap-update-enum-option.png)
+   <img src="./Image_ProjetS3/cap-update-enum-option.png">
 
    > Note : j'ai modifié la valeur "revenue" en "revenu" pour correspondre à l'ortographe française 
 
@@ -188,23 +249,23 @@ Les tests manuels ont été effectués pour vérifier le bon fonctionnement des 
 
    J'ai constaté que sous MongoDB, l'`id`  est stocké sous le nom `_id`. Or dans mon fichier je les mis sous cette forme `.id` .
 
-   ![cap-error-transac-update](/Users/arnaudabou-bacar/Desktop/me/BTS SIO/2nd Year /Cours BTSIO2/Projets BTS SIO/Projet S3/Image_ProjetS3/cap-error-transac-update.png)
+   <img src="./Image_ProjetS3/cap-error-transac-update.png">
 
    Cette erreur impactait également l'affichage du total des revenus au niveau du diagramme en barres pour la visualisation.
 
    Solution : J'ai simplement changé la forme de l'id en `_id` 
 
-   ![cap-corr-error-req-transac](/Users/arnaudabou-bacar/Desktop/me/BTS SIO/2nd Year /Cours BTSIO2/Projets BTS SIO/Projet S3/Image_ProjetS3/cap-corr-error-req-transac.png)
+   <img src="./Image_ProjetS3/cap-corr-error-req-transac.png">
 
    Résultat : 
 
    PUT request ? OK
 
-   ![cap-successful-put-req](/Users/arnaudabou-bacar/Desktop/me/BTS SIO/2nd Year /Cours BTSIO2/Projets BTS SIO/Projet S3/Image_ProjetS3/cap-successful-put-req.png)
+   <img src="./Image_ProjetS3/cap-successful-put-req.png">
 
    DELETE request? OK
 
-   ![cap-succesful-del-req](/Users/arnaudabou-bacar/Desktop/me/BTS SIO/2nd Year /Cours BTSIO2/Projets BTS SIO/Projet S3/Image_ProjetS3/cap-succesful-del-req.png)
+   <img src="./Image_ProjetS3/cap-succesful-del-req.png">
 
 3. **Formater la date sans la timezone ni l'heure :**
 
