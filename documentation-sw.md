@@ -65,19 +65,10 @@ Le projet se divise en deux principales parties :
 ### **Structure des fichiers :**
 
 - `app.js` : Fichier principal qui lance l’application backend.
-
 - `models/transactions.js` : Modèle Mongoose définissant la structure des transactions dans la base de données.
-
 - `controllers/transactions.js` : Logique métier pour manipuler les transactions (CRUD).
-
 - `routes/transactions.js` : Définition des routes pour chaque opération sur les transactions.
-
 - `public/` : Contient les fichiers statiques (HTML, CSS, JS) pour l’interface utilisateur.
-
-- `views/` : Si un moteur de template est utilisé, ce dossier peut contenir des fichiers de vue (ex. EJS, Pug). 
-
-  > Note : pour le moment ce n'est pas le cas 
-
 - `package.json` : Gestion des dépendances du projet et des scripts de démarrage.
 
 ------
@@ -225,7 +216,7 @@ Les tests manuels ont été effectués pour vérifier le bon fonctionnement des 
 
 
 
-## **9. Problémes rencontrés**
+## **9. Problémes rencontrés** 
 
 1. **Erreur lors de la saisie de la transaction : **
 
@@ -269,11 +260,48 @@ Les tests manuels ont été effectués pour vérifier le bon fonctionnement des 
 
 3. **Formater la date sans la timezone ni l'heure :**
 
+   Solution :  J'ai installé **moment.js** côté serveur backend dans le fichier `controllers/transaction.js` qui gère la logique de l'app : 
+
+   - Exemple pour récupérer les transactions : 
+
+     <img src="./Image_ProjetS3/cap-controllers-transac-momentjs.png">
+
+   Plus haut, j'ai défini `moment.js` en chargeant le module avec `require` : 
+
+   <img src="./Image_ProjetS3/cap-require-moment.png">
+
+   J'ai procéder de la même façon dans `controllers/transaction.js`  pour ajouter et modifier une transaction. 
+
+   
+
    
 
 4. Autre
 
-## **10. Conclusion et perspectives**
+
+
+## **10. Améliorations, modifications **
+
+1. Arrondir le solde à 2 chiffres après la virgule en page d'accueil 
+
+   ```js
+   //index.html
+   
+   // Calculer le solde
+   const solde = revenueTotal - depenseTotal;
+   
+   //Nouvel ajout : 
+   const soldeVirgule = parseFloat(solde.toFixed(2)); //Arrondir à 2 chiffres après la virgule
+   //parseFloat pour obtenir un nombre et non une chaîne
+   ```
+
+   
+
+2. Autre
+
+
+
+## **11. Conclusion et perspectives**
 
 Ce projet offre une solution simple et intuitive pour la gestion des finances personnelles, avec une interface utilisateur graphique et une API backend bien structurée. Ce projet est, de base, à but personnel. Mais à l'avenir, des améliorations pour étendre son cas d'utilisation est possibles incluant :
 
