@@ -75,16 +75,6 @@ div h2 {
   text-align: center;
 }
 
-div.connexion {
-  padding: 40px;
-  margin: 100px auto; /* Centre le formulaire verticalement et horizontalement */
-  color: white;
-  background-color: #033279;
-  border: 1px solid white;
-  border-radius: 8px;
-  max-width: 500px; /* Limite la largeur du conteneur du formulaire */
-}
-
 .title-sw-green {
   color: #3EB489;
 }
@@ -181,26 +171,13 @@ canvas {
   text-decoration: underline;
 }
 
-button, #subscribe {
-  padding: 10px;
-  background-color: #3EB489;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  width: 100%;
-}
-
-#submit {
-  margin-top: 20px;
-}
-
-#submit:hover, #subscribe:hover, button.connexion:hover {
+button.commencer:hover {
   background-color: white;
   color: #3EB489;
   border: 1px solid #3EB489;
 }
 
-button.connexion {
+button.commencer {
   padding: 10px 10px;
   margin: 20px;
   background-color: #3EB489;
@@ -208,37 +185,14 @@ button.connexion {
   border: none;
   border-radius: 40px;
 }
-  
-div.connexion {
-  padding: 20px;
-  margin: 60px 60px;
-  color: white;
-  background-color: #033279;
-  border: 1px solid white;
-  border-radius: 4px;
-}
 
-form.connexion {
-  display: flex;
-  flex-direction: column;
-  max-width: 400px;
-  margin: auto; /* Centre le formulaire horizontalement */
-  padding: 20px;
-  border-radius: 8px; /* Ajoute des coins arrondis */
+div.periode-select>label {
+  color:gray;
 }
 
 label.connexion {
   margin-bottom: 5px; /* Espace entre le label et le champ */
   color: white; /* Couleur des labels */
-}
-
-input.connexion {
-  padding: 10px;
-  margin-bottom: 20px; /* Espace entre les champs de formulaire */
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  width: 100%; /* Assure que l'input prenne toute la largeur du formulaire */
-  box-sizing: border-box; /* Assure que padding et border ne dépassent pas la largeur */
 }
 
 table {
