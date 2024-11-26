@@ -35,6 +35,7 @@
 - **http-errors :** Génère facilement des erreurs avec des codes d'état HTTP (comme 404 ou 500) et des messages personnalisés.
 - **debug : **une librairie pour gérer les logs de débogage dans les applications Node.js. Active ou désactive des logs par namespace.
 - **moment.js :** Un outil facilitant la manipulation des dates et permet de formater de manière précise et plus simple que JavaScript "Vanilla"
+- **express-async-handler :** Un outil permet la simplification de la gestion des erreurs. Cet outil se charge des exceptions qui seront redirigé vers le middleware de gestion globale d'erreurs et permet d'écrire du code comme s'il était fonctionnel. Son utilisation permet de simplifier le code et de se passer de blocs `try... catch`.  
 
 **Outils de développement :**
 
@@ -64,11 +65,22 @@ Le projet se divise en deux principales parties :
 
 ### **Structure des fichiers :**
 
-- `app.js` : Fichier principal qui lance l’application backend.
+- `app.js` : Fichier principal (le point d'entrée) qui lance l’application backend.
+
+  - En utilisant `express.static` , Express reconnait automatiquement le fichier `index.js` comme la page par défaut :
+
+    <img src="./Image_ProjetS3/cap-express-static.png">
+
+    
+
 - `models/transactions.js` : Modèle Mongoose définissant la structure des transactions dans la base de données.
+
 - `controllers/transactions.js` : Logique métier pour manipuler les transactions (CRUD).
+
 - `routes/transactions.js` : Définition des routes pour chaque opération sur les transactions.
+
 - `public/` : Contient les fichiers statiques (HTML, CSS, JS) pour l’interface utilisateur.
+
 - `package.json` : Gestion des dépendances du projet et des scripts de démarrage.
 
 ------
