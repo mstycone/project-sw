@@ -66,7 +66,7 @@
                 row.appendChild(typeCell);
 
                 let dateCell = document.createElement("td");
-                dateCell.textContent = transaction.date;
+                dateCell.textContent = transaction.formatage_date;
                 row.appendChild(dateCell);
 
                 // Ajouter les boutons de suppression et modification
@@ -85,7 +85,8 @@
                       <option value="revenu" ${transaction.type === 'revenu' ? 'selected' : ''}>Revenu</option>
                       <option value="depense" ${transaction.type === 'depense' ? 'selected' : ''}>Dépense</option>
                     </select>`;
-                  dateCell.innerHTML = `<input type="date" id="edit-date-${index}" value="${transaction.date}">`;
+                  dateCell.innerHTML = `<input type="date" id="edit-date-${index}" value="${DateTime.fromJSDate(transaction.date).toISODate()}">`; //formatage luxon 
+                  //dateCell.innerHTML = transaction.formatage_date;
 
                   // Remplacer le bouton Modifier par un bouton Sauvegarder
                   editBtn.style.display = "none"; // Cacher le bouton Modifier
@@ -122,7 +123,7 @@
                           descCell.textContent = updatedTransaction.categorie;
                           montantCell.textContent = updatedTransaction.montant.toFixed(2) + " €";
                           typeCell.textContent = updatedTransaction.type;
-                          dateCell.textContent = updatedTransaction.date;
+                          dateCell.textContent = data.formatage_date; // Utilisation de la date formatée mise à jour
 
                           // Réafficher le bouton Modifier et cacher le bouton Sauvegarder
                           editBtn.style.display = "inline";
@@ -143,7 +144,7 @@
                     descCell.innerHTML = transaction.categorie; 
                     montantCell.innerHTML = transaction.montant.toFixed(2) + " €";
                     typeCell.innerHTML = transaction.type;
-                    dateCell.innerHTML = transaction.date;
+                    dateCell.innerHTML = transaction.formatage_date;
 
                     //Réafficher les boutons de départ 
                     editBtn.style.display = "inline";

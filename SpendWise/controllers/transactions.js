@@ -2,6 +2,7 @@ const Transaction = require('../models/transactions');
 //const moment = require('moment'); //load module moment
 const {DateTime} = require('luxon'); //load le module luxon
 const asyncHandler = require("express-async-handler"); //gestion auto exceptions 
+const transactions = require('../models/transactions');
 //Simplifie le code des controllers
 
 //Récuperer les transactions 
@@ -14,7 +15,7 @@ exports.getAllTransactions = asyncHandler(async (req, res) => {
         const formattedTransactions = transactions.map(transaction => {
             //transaction.date = moment(transaction.date).format('YYYY-MM-DD');    
             //formatage utilisant luxon         
-            transaction.date = DateTime.fromJSDate(transaction.date).toFormat('YYYY-MM-DD');
+            transaction.date = transaction.formatage_date
             return transaction;
         });
 
@@ -58,7 +59,7 @@ exports.updateTransaction = asyncHandler(async (req, res) => {
     //Formatage de la date en DD-MM-YYYY
     //const formattedDate = moment(date).format('YYYY-MM-DD');
     //Formatage utilisant luxon
-    const formattedDate = DateTime.fromISO(date, { zone: 'utc' }).toFormat('YYYY-MM-DD');
+    const formattedDate = transaction.formatage_date
 
     //Mettre à jour la transaction
     const updatedTransaction = await Transaction.findByIdAndUpdate(id, { type, categorie, montant, date: formattedDate }, { new: true });
