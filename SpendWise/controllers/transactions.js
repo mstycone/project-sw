@@ -1,5 +1,6 @@
 const Transaction = require('../models/transactions'); 
-const moment = require('moment'); //load module moment
+//const moment = require('moment'); //load module moment
+const {DateTime} = require('luxon'); //load le module luxon
 const asyncHandler = require("express-async-handler"); //gestion auto exceptions 
 //Simplifie le code des controllers
 
@@ -11,7 +12,9 @@ exports.getAllTransactions = asyncHandler(async (req, res) => {
 
         //Formater les dates avant envoie au client 
         const formattedTransactions = transactions.map(transaction => {
-            transaction.date = moment(transaction.date).format('YYYY-MM-DD');
+            //transaction.date = moment(transaction.date).format('YYYY-MM-DD');    
+            //formatage utilisant luxon         
+            transaction.date = DateTime.fromJSDate(transaction.date).toFormat('YYYY-MM-DD');
             return transaction;
         });
 
@@ -26,7 +29,9 @@ exports.addTransaction = asyncHandler(async (req, res) => {
     const { type, categorie, montant, date } = req.body;
 
     //Formatage de la date en DD-MM-YYYY
-    const formattedDate = moment(date, 'YYYY-MM-DD').startOf('day').toDate();
+    //const formattedDate = moment(date, 'YYYY-MM-DD').startOf('day').toDate();
+    //Formatage utilisant luxon 
+    const formattedDate = DateTime.fromISO(date, { zone: 'utc' }).startOf('day').toJSDate(); //Conversion en objet Date JS
         
     const newTransaction = new Transaction({ type, categorie, montant, date: formattedDate });
     await newTransaction.save();
@@ -51,7 +56,9 @@ exports.updateTransaction = asyncHandler(async (req, res) => {
     }
 
     //Formatage de la date en DD-MM-YYYY
-    const formattedDate = moment(date).format('YYYY-MM-DD');
+    //const formattedDate = moment(date).format('YYYY-MM-DD');
+    //Formatage utilisant luxon
+    const formattedDate = DateTime.fromISO(date, { zone: 'utc' }).toFormat('YYYY-MM-DD');
 
     //Mettre à jour la transaction
     const updatedTransaction = await Transaction.findByIdAndUpdate(id, { type, categorie, montant, date: formattedDate }, { new: true });
