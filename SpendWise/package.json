@@ -1,7 +1,10 @@
 {
   "dependencies": {
     "cookie-parser": "^1.4.7",
+    "debug": "^4.3.7",
     "express": "^4.21.1",
+    "express-async-handler": "^1.2.0",
+    "express-validator": "^7.2.0",
     "http-errors": "^2.0.0",
     "mongoose": "^8.8.2",
     "morgan": "^1.10.0",
@@ -20,7 +23,7 @@
     "serverstart": "DEBUG=spendwise:* npm run dev"
   },
   "keywords": [],
-  "author": "",
+  "author": "Arnaud A-B",
   "license": "ISC",
-  "description": ""
+  "description": "Projet app visualisation/simulation budget perso "
 }

@@ -1,8 +1,6 @@
 const Transaction = require('../models/transactions'); 
 //const moment = require('moment'); //load module moment
-const {DateTime} = require('luxon'); //load le module luxon
 const asyncHandler = require("express-async-handler"); //gestion auto exceptions 
-const transactions = require('../models/transactions');
 //Simplifie le code des controllers
 
 //Récuperer les transactions 
@@ -13,9 +11,8 @@ exports.getAllTransactions = asyncHandler(async (req, res) => {
 
         //Formater les dates avant envoie au client 
         const formattedTransactions = transactions.map(transaction => {
-            //transaction.date = moment(transaction.date).format('YYYY-MM-DD');    
-            //formatage utilisant luxon         
-            transaction.date = transaction.formatage_date
+            //Formater la date au format YYYY-MM-DD
+            transaction.date = transaction.date.toISOString().split('T')[0];
             return transaction;
         });
 
@@ -29,10 +26,8 @@ exports.getAllTransactions = asyncHandler(async (req, res) => {
 exports.addTransaction = asyncHandler(async (req, res) => {
     const { type, categorie, montant, date } = req.body;
 
-    //Formatage de la date en DD-MM-YYYY
-    //const formattedDate = moment(date, 'YYYY-MM-DD').startOf('day').toDate();
-    //Formatage utilisant luxon 
-    const formattedDate = DateTime.fromISO(date, { zone: 'utc' }).startOf('day').toJSDate(); //Conversion en objet Date JS
+    //Assurer que la date est bien au format Date
+    const formattedDate = new Date(date);
         
     const newTransaction = new Transaction({ type, categorie, montant, date: formattedDate });
     await newTransaction.save();
@@ -56,12 +51,10 @@ exports.updateTransaction = asyncHandler(async (req, res) => {
         res.status(404).json({ message: 'Transaction non trouvée' });
     }
 
-    //Formatage de la date en DD-MM-YYYY
-    //const formattedDate = moment(date).format('YYYY-MM-DD');
-    //Formatage utilisant luxon
-    const formattedDate = transaction.formatage_date
+    //Assurer que la date est bien au format Date
+    const formattedDate = new Date(date); // Assurer que date est un objet Date valide
 
     //Mettre à jour la transaction
-    const updatedTransaction = await Transaction.findByIdAndUpdate(id, { type, categorie, montant, date: formattedDate }, { new: true });
+    const updatedTransaction = await Transaction.findByIdAndUpdate(id, { type, categorie, montant ,date: formattedDate }, { new: true });
     res.json(updatedTransaction);
 });

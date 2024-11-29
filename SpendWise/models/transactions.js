@@ -20,8 +20,8 @@ const TransacSchema = new Schema ({
     },
     date: { 
         type: Date, 
-        require$d: true, 
-        default: () => new Date().toISOString().split('T')[0] 
+        required: true, 
+        default: Date.now 
     },
 });
 
