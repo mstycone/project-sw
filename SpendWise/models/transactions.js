@@ -25,4 +25,6 @@ const TransacSchema = new Schema ({
     },
 });
 
+//Possibilité d'utilisé un virtual ici
+
 module.exports = mongoose.model('Transaction', TransacSchema);

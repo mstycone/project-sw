@@ -1,5 +1,4 @@
 const Transaction = require('../models/transactions'); 
-//const moment = require('moment'); //load module moment
 const asyncHandler = require("express-async-handler"); //gestion auto exceptions 
 //Simplifie le code des controllers
 
