@@ -1,9 +1,13 @@
-const Transaction = require('../models/transactions'); 
-const asyncHandler = require("express-async-handler"); //gestion auto exceptions 
-//Simplifie le code des controllers
+import Transaction from '../models/transactions.js'; 
+import asyncHandler from 'express-async-handler'; //gestion auto des exceptions 
+//asyncHandler simplifie le code des controllers
 
 //Récuperer les transactions 
-exports.getAllTransactions = asyncHandler(async (req, res) => {
+//Common JS convention 
+//exports.<nom> = ...
+
+///Convention ES Modules 
+const getAllTransactions = asyncHandler(async (req, res) => {    
     //Simplification gestion erreurs un seul lieu grâce à express-async-handler
    // try {
         const transactions = await Transaction.find();
@@ -22,7 +26,7 @@ exports.getAllTransactions = asyncHandler(async (req, res) => {
 });
 
 //Ajout d'une nouvelle transaction 
-exports.addTransaction = asyncHandler(async (req, res) => {
+const addTransaction = asyncHandler(async (req, res) => {
     const { type, categorie, montant, date } = req.body;
 
     //Assurer que la date est bien au format Date
@@ -34,14 +38,14 @@ exports.addTransaction = asyncHandler(async (req, res) => {
 });
 
 //Supprimer une transaction 
-exports.deleteTransaction = asyncHandler(async (req, res) => {
+const deleteTransaction = asyncHandler(async (req, res) => {
     const { id } = req.params;
     await Transaction.findByIdAndDelete(id);
     res.status(200).send('Transaction supprimée');
 });
   
 //Modifier une transaction
-exports.updateTransaction = asyncHandler(async (req, res) => {
+const updateTransaction = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const { type, categorie, montant, date } = req.body;
     //Vérifier si la transaction existe déjà 
@@ -54,6 +58,23 @@ exports.updateTransaction = asyncHandler(async (req, res) => {
     const formattedDate = new Date(date); // Assurer que date est un objet Date valide
 
     //Mettre à jour la transaction
-    const updatedTransaction = await Transaction.findByIdAndUpdate(id, { type, categorie, montant ,date: formattedDate }, { new: true });
+    const updatedTransaction = await Transaction.findByIdAndUpdate(
+        id, 
+        { type, categorie, montant ,date: formattedDate },
+        { new: true }
+    );
     res.json(updatedTransaction);
 });
+
+///Convention ES Modules///
+
+//Regroupement toutes méthodes dans un objet  
+const transactionController = {
+    getAllTransactions,
+    addTransaction,
+    deleteTransaction,
+    updateTransaction
+};
+
+//Exportation objet par défaut 
+export default transactionController;

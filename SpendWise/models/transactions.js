@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
@@ -25,6 +25,11 @@ const TransacSchema = new Schema ({
     },
 });
 
-//Possibilité d'utilisé un virtual ici
+//Possibilité d'utilisé un virtual pour la date ici
 
-module.exports = mongoose.model('Transaction', TransacSchema);
+//CommonJS conventions 
+//module.exports = mongoose.model('Transaction', TransacSchema);
+
+//Convention ES Modules 
+const Transaction = mongoose.model('Transaction', TransacSchema);
+export default Transaction;

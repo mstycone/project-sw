@@ -1,7 +1,7 @@
-const express = require("express");
+import express from 'express';
 const router = express.Router(); 
 //Possibilité utiliser luxon ou moment 
-const transactionController = require('../controllers/transactions');
+import transactionController from '../controllers/transactions.js';
 
 //Récuperer toutes les transactions 
 router.get('/', transactionController.getAllTransactions);
@@ -17,8 +17,11 @@ router.put('/:id', transactionController.updateTransaction);
 
 //Middleware de gestions des erreurs 
 router.use((err, req, res, next) => {
-    console.error(err);
-    res.status(500).send({ message: 'Une erreur est survenue' });
+    console.error('Erreur dans transaction route', err);
+    res.status(500).send({ message: 'Erreur dans la gestion des transactions' });
 });
 
-module.exports = router;
+//module.exports = router; => Convention CommonJS 
+
+//Convention ES Modules 
+export default router;
