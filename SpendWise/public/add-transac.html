@@ -49,22 +49,15 @@
 
     document.getElementById('transac-form').addEventListener('submit', function (event) {
       event.preventDefault();
-
-      const type = document.getElementById('type').value;
-      const categorie = document.getElementById('categorie').value;
-      const montant = parseFloat(document.getElementById('montant').value.replace(",", "."));
-      //Sauvegarde date en format YYYY-MM-DD - split permet d'enlever l'horaire 
-      const date = new Date().toISOString().split('T')[0];
-
       
       // Créer un objet de transaction
       const transaction = {
-        type,
-        categorie,
-        montant,
-        date
+        type : document.getElementById('type').value,
+        categorie: document.getElementById('categorie').value,
+        montant: parseFloat(document.getElementById('montant').value.replace(",", ".")),
+        date: new Date()
       };
-      
+            
       // Envoi de la requête POST au backend pour ajouter une transaction
       fetch('/transactions', {
         method: 'POST',
