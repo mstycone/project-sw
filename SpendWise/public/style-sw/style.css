@@ -1,29 +1,65 @@
+/* Variables pour les couleurs et tailles */
+:root {
+  --primary-color: #3EB489;
+  --secondary-color: #002D72;
+  --text-color: #333;
+  --error-color: #f44336;
+  --button-hover-color: #ff5722;
+  --border-radius: 8px;
+  --font-family: 'Arial', sans-serif;
+  --max-width: 1200px;
+}
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: var(--font-family);
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background-color: #f4f4f4;
+  color: var(--text-color);
 }
   
-#connexion {
-  background-color: white; 
-}
-
 header {
-  background-color: #3EB489;
+  background-color: var(--primary-color);
   color: white;
   padding: 1em;
   text-align: center;
 }
   
+h1 {
+  color: var(--secondary-color); 
+  margin-left: 20px;
+}
+
+h2 {
+  color: var(--primary-color);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+nav a {
+  margin: 0 15px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+nav a:active {
+  color: var(--secondary-color);
+}
+
 p#feedback {
   display:none; 
   color:white; 
   padding: 20px;
   margin-top: 30px; 
   text-align: center;
-  background-color: #4CAF50;
+  background-color: var(--primary-color);
   border-radius: 10px;
   opacity: 0.85;
   position: absolute;
@@ -43,59 +79,21 @@ p#feedback {
   lent début et fin, rapide entre */
 }
 
-nav a {
-  margin: 0 15px;
-  color: white;
-  text-decoration: none;
-}
-
-nav a:hover {
-  color: white;
-  text-decoration: underline;
-}
-
-nav a:active {
-  color: #002D72;
-}
-
-h1 {
-  color: #002D72; 
-}
-
-div h1 {
-  margin-left: 20px;
-}
-
-h2 {
-  color: #3EB489;
-  margin-bottom: 30px;
-}
-
-div h2 {
-  text-align: center;
-}
-
-.title-sw-green {
-  color: #3EB489;
-}
-
-.title-sw-white {
-  color: white;
-}
-
 main {
   padding: 20px;
+  max-width: var(--max-width);
+  margin: 0 auto;
 }
-  
+
 form {
   display: flex; /* Utilise flexbox pour l'alignement */
   flex-direction: column;
   max-width: 400px;
   margin: auto;
-}
-
-#transac-form {
-  margin-top: 30px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
@@ -104,29 +102,70 @@ form {
   margin-bottom: 10px; 
 }
 
+#transac-form {
+  margin-top: 30px;
+}
+
 label {
   flex: 1; /* Occupe 1 part de l'espace */
   text-align: left;
+  font-weight: bold;
 }
 
 input, select {
   flex: 2; /* Occupe 2 parts de l'espace */
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-#type, #categorie, #montant {
-  text-align: center;
-}
-
-form div {
-  margin-bottom: 10px;
-  width: 100%; 
+  border-radius: var(--border-radius);
+  font-size: 1em;
 }
 
 button {
   cursor: pointer;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.button-add-transac {
+  padding: 10px;
+  background-color: white;
+  color: var(--primary-color);
+  border: none;
+  border-radius: 4px;
+  width: 100%;
+}
+.button-add-transac:hover {
+  color: white;
+  background-color: var(--button-hover-color);
+}
+
+#submit {
+  padding: 12px;
+  margin: 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 5px;
+  width: 100%;
+}
+
+#submit:hover {
+  background-color: var(--button-hover-color);
+}
+
+button.commencer{
+  padding: 12px 20px;
+  border-radius: 40px;
+  margin: 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+button.commencer:hover {
+  background-color: var(--button-hover-color);
+  color: white;
 }
 
 .conteneur-graph {
@@ -156,43 +195,26 @@ canvas {
     max-width: 100%; /* Chaque graph prendra toute la largeur disponible */
     margin: 10px 0; /*Espacement verticale entre graphs*/
   }
+
+  form {
+    max-width: 100%;
+  }
+
+  button.commencer {
+    width: auto;
+    margin: 10px auto;
+  }
+
+  #submit {
+    padding: 12px 10px;
+  }
 }
 
-.button-add-transac {
-  padding: 10px;
-  background-color: white;
-  color: #3EB489;
-  border: none;
-  border-radius: 4px;
-  width: 100%;
-}
-.button-add-transac:hover {
-  color: red;
-  text-decoration: underline;
-}
-
-button.commencer:hover {
-  background-color: white;
-  color: #3EB489;
-  border: 1px solid #3EB489;
-}
-
-button.commencer {
-  padding: 10px 10px;
-  margin: 20px;
-  background-color: #3EB489;
-  color: white;
-  border: none;
-  border-radius: 40px;
-}
-
-div.periode-select>label {
-  color:gray;
-}
-
-label.connexion {
-  margin-bottom: 5px; /* Espace entre le label et le champ */
-  color: white; /* Couleur des labels */
+footer {
+  margin: 400px 50px 20px 50px;
+  padding: 20px;
+  color: var(--secondary-color);
+  text-align: center;
 }
 
 table {
@@ -200,7 +222,7 @@ table {
   border-collapse: collapse;
   margin: 20px 0;
 }
-  
+
 table, th, td {
   border: 1px solid #ddd;
   text-align: center;
@@ -216,8 +238,28 @@ th {
   text-align: center;
 }
 
-footer {
-  margin: 400px 50px 20px 50px;
-  color: #002D72;
+.title-sw-green {
+  color: var(--primary-color);
+}
+
+.title-sw-white {
+  color: white;
 }
   
+#type, #categorie, #montant {
+  text-align: center;
+}
+
+div.periode-select>label {
+  color:gray;
+}
+
+/* Images responsives (au cas où) */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ajout de favicon et images */
