@@ -8,6 +8,8 @@
   --border-radius: 8px;
   --font-family: 'Arial', sans-serif;
   --max-width: 1200px;
+  --transition-duration: 0.3s;
+  --transition-timing-function: ease;
 }
 
 body {
@@ -17,18 +19,39 @@ body {
   box-sizing: border-box;
   background-color: #f4f4f4;
   color: var(--text-color);
+  line-height: 1.6;
 }
   
 header {
-  background-color: var(--primary-color);
+  position: relative;
+  background-color: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color: white;
-  padding: 1em;
+  padding: 1.5em;
   text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid var(--primary-color);
+  /*animation: slide-in 1s ease-out;*/
 }
+/*
+@keyframes slide-in {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}*/
   
 h1 {
+  font-size: 2.5rem;
   color: var(--secondary-color); 
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 2px;
   margin-left: 20px;
+  margin-bottom: 0;
 }
 
 h2 {
@@ -37,23 +60,56 @@ h2 {
   text-align: center;
 }
 
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
 nav a {
   margin: 0 15px;
-  color: white;
+  color: var(--primary-color);
   text-decoration: none;
   font-weight: bold;
+  border-radius: var(--border-radius);
+  background-color: transparent;
+  transition: background-color var(--transition-duration), color var(--transition-duration);
 }
 
 nav a:hover {
-  color: white;
-  text-decoration: underline;
+  color: var(--button-hover-color);
 }
 
 nav a:active {
-  color: var(--secondary-color);
+  color: var(--button-hover-color);
 }
 
-p#feedback {
+.button-exit {
+  position: absolute; 
+  top: 15%; 
+  right:15px; 
+  transform: translateY(-30%); 
+  color: var(--primary-color);
+  padding: 10px 20px;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color var(--transition-duration) var(--transition-timing-function);
+}
+.button-exit:hover {
+  background-color: var(--button-hover-color);
+  color: white;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.button-exit:active {
+  background-color: var(--secondary-color);
+  transform: translateY(-28%);
+}
+
+#feedback {
   display:none; 
   color:white; 
   padding: 20px;
@@ -63,20 +119,14 @@ p#feedback {
   border-radius: 10px;
   opacity: 0.85;
   position: absolute;
-  /*Position selon l'ancêtre plus proche*/
   top: 50%;
   left: 50%;
-  /*Position coin sup g élément au milieu du conteneur parent
-  horizontalt et verticalt*/
   transform: translate(-50%, -50%);
-  /*Centre l'élément par rapport positon origine 
-  négatif : gauche et haut 
-  positif : opposé */
   transition: opacity 0.5s ease-in-out;
-  /*rend display fluide et agréable
-  temps de transition 0.5sec
-  ease-in-out: control vitesse de transition
-  lent début et fin, rapide entre */
+}
+
+#intro {
+  text-align: center;
 }
 
 main {
@@ -86,18 +136,18 @@ main {
 }
 
 form {
-  display: flex; /* Utilise flexbox pour l'alignement */
+  display: flex; 
   flex-direction: column;
   max-width: 400px;
   margin: auto;
   background-color: #fff;
-  padding: 20px;
+  padding: 30px; /* Increase padding */
   border-radius: var(--border-radius);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
-  display: flex; /* Utilise flexbox pour l'alignement */
+  display: flex; 
   align-items: center; 
   margin-bottom: 10px; 
 }
@@ -107,17 +157,18 @@ form {
 }
 
 label {
-  flex: 1; /* Occupe 1 part de l'espace */
+  flex: 1; 
   text-align: left;
   font-weight: bold;
 }
 
 input, select {
-  flex: 2; /* Occupe 2 parts de l'espace */
+  flex: 2; 
   padding: 12px;
   border: 1px solid #ddd;
   border-radius: var(--border-radius);
   font-size: 1em;
+  text-align: center;
 }
 
 button {
@@ -134,8 +185,10 @@ button {
   color: var(--primary-color);
   border: none;
   border-radius: 4px;
-  width: 100%;
+  width: calc(100% - 20px); /* Adjust width to account for margin */
+  margin-right: 20px; /* Increase margin to the right */
 }
+
 .button-add-transac:hover {
   color: white;
   background-color: var(--button-hover-color);
@@ -147,7 +200,8 @@ button {
   background-color: var(--primary-color);
   color: white;
   border-radius: 5px;
-  width: 100%;
+  /*Résolution problème de débordement bouton vers bordure droite du formulaire */
+  width: calc(100% - 40px);/*Ajustemt largeur comptant margin */
 }
 
 #submit:hover {
@@ -170,30 +224,30 @@ button.commencer:hover {
 
 .conteneur-graph {
   display: flex; 
-  justify-content: space-around; /* Espacement uniforme autour des graphiques */
+  justify-content: space-around; 
   margin-top: 20px; 
 }
 
 .graph {
-  flex: 1; /* Chaque graphique prendra une part égale de l'espace disponible */
+  flex: 1; 
   max-width: 400px;
   margin: 0 10px; 
 }
 
 canvas {
-  max-width: 100%; /* S'assurer que le canvas ne déborde pas */
-  height: auto; /* Garder le ratio d'aspect */
+  max-width: 100%; 
+  height: auto; 
 }
 
 /* Media query pour écrans plus étroits */
 @media (max-width: 768px) {
   .conteneur-graph{
-    flex-direction: column; /* Alignement vertical sur les petits écrans */
+    flex-direction: column; 
     align-items: center;
   }
   .graph {
-    max-width: 100%; /* Chaque graph prendra toute la largeur disponible */
-    margin: 10px 0; /*Espacement verticale entre graphs*/
+    max-width: 100%; 
+    margin: 10px 0; 
   }
 
   form {
@@ -219,11 +273,13 @@ footer {
 
 table {
   width: 100%;
+  border: 1px solid #ddd;
   border-collapse: collapse;
   margin: 20px 0;
+  text-align: center;
 }
 
-table, th, td {
+th, td {
   border: 1px solid #ddd;
   text-align: center;
 }
@@ -238,19 +294,14 @@ th {
   text-align: center;
 }
 
-.title-sw-green {
-  color: var(--primary-color);
-}
-
 .title-sw-white {
-  color: white;
-}
-  
-#type, #categorie, #montant {
-  text-align: center;
+  color: var(--primary-color);
+  background-color: white;
+  padding: 0 5px;
+  border-radius: var(--border-radius);
 }
 
-div.periode-select>label {
+.periode-select>label {
   color:gray;
 }
 
@@ -261,5 +312,3 @@ img {
   display: block;
   margin: 0 auto;
 }
-
-/* ajout de favicon et images */
