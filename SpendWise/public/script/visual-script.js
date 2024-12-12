@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Parcourir les transactions pour calculer les totaux
         transactions.forEach((transaction) => {
-            if (transaction.type === "depense") {
+            if (transaction.type === "dépense") {
                 depenseTotal += parseFloat(transaction.montant);
                 // Catégoriser les dépenses
                 if (categories[transaction.categorie]) {

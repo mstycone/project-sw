@@ -18,6 +18,7 @@ const port = 3000;
 
 //Charger les routes 
 import transacRoutes from './routes/transactions.js';
+import catRoutes from './routes/categories.js';
 
 //Création dirname 
 const __filename = fileURLToPath(import.meta.url);
@@ -26,7 +27,7 @@ const __dirname = path.dirname(__filename);
 //Ajout middlewares 
 app.use(logger('dev'));
 //dotenv.config();
-app.use(express.json());
+app.use(express.json()); //parser le json
 app.use(express.urlencoded({ extended: false}));
 app.use(cookieParser());
 
@@ -36,7 +37,7 @@ main().catch((err) => console.log(err));
 async function main() {
     //attend la connection par défaut à mongodb 
     await mongoose.connect(mongodb);
-    console.log("Connexion à la bdd réussie");
+    console.log("Connexion à MongoDB réussie");
 }
 
 //Connection MongoDB en production 
@@ -62,6 +63,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Import des routes back
 app.use('/transactions', transacRoutes);
+app.use('/categories', catRoutes);
 
 //Middelware gestion des erreurs globale
 app.use((err, req, res, next) => {

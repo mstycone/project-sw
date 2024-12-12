@@ -16,9 +16,13 @@ document.addEventListener("DOMContentLoaded", () => {
         transactions.forEach((transaction, index) => {
             let row = document.createElement("tr");
 
+            let catCell = document.createElement("td");
+            catCell.textContent = transaction.categorie;
+            row.appendChild(catCell);
+
             let descCell = document.createElement("td");
-            descCell.textContent = transaction.categorie;
-            row.appendChild(descCell);
+            descCell.textContent = transaction.description;
+            row.appendChild(descCell)
 
               let montantCell = document.createElement("td");
               montantCell.textContent = transaction.montant.toFixed(2) + " €";
@@ -29,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
               row.appendChild(typeCell);
 
               let dateCell = document.createElement("td");
-              dateCell.textContent = transaction.date; // Utilisation du champ virtuel "formatted_date"
+              dateCell.textContent = dayjs(transaction.date).format('DD/MM/YYYY');
               row.appendChild(dateCell);
 
               // Ajouter les boutons de modification et suppression
@@ -41,14 +45,15 @@ document.addEventListener("DOMContentLoaded", () => {
               editBtn.textContent = "Modifier";
               editBtn.addEventListener("click", () => {
                 // Remplacer les cellules par des champs de saisie pour modification
-                descCell.innerHTML = `<input type="text" value="${transaction.categorie}" id="edit-categorie-${index}">`;
+                catCell.innerHTML = `<input type="text" value="${transaction.categorie}" id="edit-categorie-${index}">`;
+                descCell.innerHTML = `<input type="text" value="${transaction.description}" id="edit-description-${index}">`;
                 montantCell.innerHTML = `<input type="number" value="${transaction.montant}" id="edit-montant-${index}">`;
                 typeCell.innerHTML = `
                   <select id="edit-type-${index}">
                     <option value="revenu" ${transaction.type === 'revenu' ? 'selected' : ''}>Revenu</option>
-                    <option value="depense" ${transaction.type === 'depense' ? 'selected' : ''}>Dépense</option>
+                    <option value="dépense" ${transaction.type === 'dépense' ? 'selected' : ''}>Dépense</option>
                   </select>`;
-                dateCell.innerHTML = `<input type="date" id="edit-date-${index}" value="${transaction.date.split('T')[0]}">`; // Format "YYYY-MM-DD"
+                dateCell.innerHTML = `<input type="date" id="edit-date-${index}" value="${dayjs(transaction.date).format('YYYY-MM-DD')}">`; // Format "YYYY-MM-DD"
 
                 // Remplacer le bouton Modifier par un bouton Sauvegarder
                 editBtn.style.display = "none"; // Cacher le bouton Modifier
@@ -63,9 +68,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Récupérer les nouvelles valeurs des champs dans la bdd
                     const updatedTransaction = {
                       categorie: document.getElementById(`edit-categorie-${index}`).value,
+                      description: document.getElementById(`edit-description-${index}`).value,
                       montant: parseFloat(document.getElementById(`edit-montant-${index}`).value),
                       type: document.getElementById(`edit-type-${index}`).value,
-                      date: document.getElementById(`edit-date-${index}`).value,
+                      date: dayjs(document.getElementById(`edit-date-${index}`).value).format('DD/MM/YYYY'),
                     };
 
                     //Envoyer la requete put pour modifier les transactions 
@@ -74,22 +80,24 @@ document.addEventListener("DOMContentLoaded", () => {
                       headers: {'Content-Type': 'application/json'},
                       body: JSON.stringify(updatedTransaction)
                     })
-                      .then(response => {
+                      .then((response) => {
                         if (!response.ok) {
                           throw new Error(`Erreur lors de l'update de la transaction : ${response.statusText}`);
                         }
                         return response.json();
                       })
-                      .then(data => {
+                      .then((data) => {
                        // Mettre à jour l'affichage de la transaction
-                        descCell.textContent = updatedTransaction.categorie;
+                        catCell.textContent = updatedTransaction.categorie;
+                        descCell.textContent = updatedTransaction.description;
                         montantCell.textContent = updatedTransaction.montant.toFixed(2) + " €";
                         typeCell.textContent = updatedTransaction.type;
-                        dateCell.textContent = updatedTransaction.date.split('T')[0]; // Format "YYYY-MM-DD"
+                        dateCell.textContent = dayjs(updatedTransaction.date).format('DD/MM/YYYY'); // Format "YYYY-MM-DD"
 
                         // Réafficher le bouton Modifier et cacher le bouton Sauvegarder
                         editBtn.style.display = "inline";
                         saveBtn.remove();
+                        cancelBtn.remove(); 
                       })
                       .catch(error => alert(error.message));
                   }
@@ -103,10 +111,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 //Reprend les valeurs de bases 
                 cancelBtn.addEventListener("click", () => {
-                  descCell.innerHTML = transaction.categorie; 
+                  catCell.innerHTML = transaction.categorie; 
+                  descCell.innerHTML = transaction.description;
                   montantCell.innerHTML = transaction.montant.toFixed(2) + " €";
                   typeCell.innerHTML = transaction.type;
-                  dateCell.innerHTML = transaction.date.split('T')[0];
+                  dateCell.innerHTML = dayjs(transaction.date).format('DD/MM/YYYY');
 
                   //Réafficher les boutons de départ 
                   editBtn.style.display = "inline";

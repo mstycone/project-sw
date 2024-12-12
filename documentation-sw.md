@@ -34,8 +34,8 @@
 - **path : **Assure la compatibilité des chemins entre différents systèmes d'exploitation
 - **http-errors :** Génère facilement des erreurs avec des codes d'état HTTP (comme 404 ou 500) et des messages personnalisés.
 - **debug : **une librairie pour gérer les logs de débogage dans les applications Node.js. Active ou désactive des logs par namespace.
-- **~~moment.js~~ <span style="color:grey;">(obsolète)</span>:** Un outil facilitant la manipulation des dates et permet de formater de manière précise et plus simple que JavaScript "Vanilla"
-- **luxon :** Un outil de formatage de date. Une solution plus légère, plus performant et moderne. 
+- **daysjs :** Un outil de formatage de date plus légère, plus performant et moderne.
+- **express-validator : ** Un outil permettant la validation et la sanitisation (assainir) des données provenant des requêtes HTTP. Améliore la fiabilité et la sécurité.
 - **express-async-handler :** Un outil permet la simplification de la gestion des erreurs. Cet outil se charge des exceptions qui seront redirigé vers le middleware de gestion globale d'erreurs et permet d'écrire du code comme s'il était fonctionnel. Son utilisation permet de simplifier le code et de se passer de blocs `try... catch`.  
 
 **Outils de développement :**
@@ -43,6 +43,7 @@
 - **Nodemon** : Utilisé pour recharger automatiquement l'application lors de modifications dans le code.
 - **Eslint :** Un outil de développement analysant le code pour détecter les éventuelles erreurs et appliquer des règles de style. Dans l'objectif d'améliorer la qualité et la cohérence du code. 
 - **Postman** : Outil pour tester les API RESTful et vérifier les routes du serveur.
+- **Stylelint : **
 
 **Ajout d'un script de démarrage `package.json` : **
 

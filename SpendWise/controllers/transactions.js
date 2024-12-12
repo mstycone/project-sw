@@ -1,4 +1,5 @@
 import Transaction from '../models/transactions.js'; 
+import Categorie from '../models/categories.js';
 import asyncHandler from 'express-async-handler'; //gestion auto des exceptions 
 //asyncHandler simplifie le code des controllers
 
@@ -10,14 +11,14 @@ import asyncHandler from 'express-async-handler'; //gestion auto des exceptions
 const getAllTransactions = asyncHandler(async (req, res) => {    
     //Simplification gestion erreurs un seul lieu grâce à express-async-handler
    // try {
-        const transactions = await Transaction.find();
+        //Récuperer transactions et peupler ke champ categorie
+        const transactions = await Transaction.find().populate('categorie', 'name'); //Spécifie champ voulu
 
-        //Formater les dates avant envoie au client 
-        const formattedTransactions = transactions.map(transaction => {
-            //Formater la date au format YYYY-MM-DD
-            transaction.date = transaction.date.toISOString().split('T')[0];
-            return transaction;
-        });
+        //Remplacer la categorie par son nom 
+        const formattedTransactions = transactions.map(transaction => ({ //map permet transformer chaque transaction
+            ...transaction.toObject(),
+            categorie: transaction.categorie.name //Remplacer l'objet catégorie par son nom 
+        }));
 
         res.json(formattedTransactions);
    // } catch (error) {
@@ -27,12 +28,18 @@ const getAllTransactions = asyncHandler(async (req, res) => {
 
 //Ajout d'une nouvelle transaction 
 const addTransaction = asyncHandler(async (req, res) => {
-    const { type, categorie, montant, date } = req.body;
+    const { type, categorie, description, montant, date } = req.body;
 
     //Assurer que la date est bien au format Date
     const formattedDate = new Date(date);
         
-    const newTransaction = new Transaction({ type, categorie, montant, date: formattedDate });
+    const newTransaction = new Transaction({ 
+        type,
+        categorie, 
+        description, 
+        montant, 
+        date: formattedDate
+    });
     await newTransaction.save();
     res.status(201).json(newTransaction);
 });
@@ -47,7 +54,7 @@ const deleteTransaction = asyncHandler(async (req, res) => {
 //Modifier une transaction
 const updateTransaction = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const { type, categorie, montant, date } = req.body;
+    const { type, categorie, description, montant, date } = req.body;
     //Vérifier si la transaction existe déjà 
     const existTransaction = await Transaction.findById(id);
     if (!existTransaction) {
@@ -60,12 +67,16 @@ const updateTransaction = asyncHandler(async (req, res) => {
     //Mettre à jour la transaction
     const updatedTransaction = await Transaction.findByIdAndUpdate(
         id, 
-        { type, categorie, montant ,date: formattedDate },
+        { type, categorie, description, montant ,date: formattedDate },
         { new: true }
     );
     res.json(updatedTransaction);
 });
 
+const getAllCategories = asyncHandler(async (req, res) => {
+    const categories = await Categorie.find();
+    res.status(200).json(categories);
+});
 ///Convention ES Modules///
 
 //Regroupement toutes méthodes dans un objet  
@@ -73,7 +84,8 @@ const transactionController = {
     getAllTransactions,
     addTransaction,
     deleteTransaction,
-    updateTransaction
+    updateTransaction,
+    getAllCategories
 };
 
 //Exportation objet par défaut 

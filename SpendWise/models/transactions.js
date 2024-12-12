@@ -3,29 +3,31 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const TransacSchema = new Schema ({
-    type: { 
+    type: {
         type: String,
         required: true,
-        enum: ["Revenu", "Dépense", "revenu", "depense"],    
+        enum: ["Revenu", "Dépense", "revenu", "dépense"],    
     },
-    categorie: { 
+    categorie: {
+        type: Schema.Types.ObjectId, //Stocke l'objetid de la catégorie
+        ref: 'Categorie',
+        required: true,
+    },
+    description: {
         type: String,
         required: true,
-        trim: true,
     },
-    montant: { 
+    montant: {
         type: Number,
         required: true,
-        min: 0 
+        min: 0
     },
-    date: { 
-        type: Date, 
+    date: {
+        type: Date,
         required: true, 
-        default: Date.now 
+        default: Date.now
     },
 });
-
-//Possibilité d'utilisé un virtual pour la date ici
 
 //CommonJS conventions 
 //module.exports = mongoose.model('Transaction', TransacSchema);

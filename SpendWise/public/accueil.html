@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style-sw/style.css" type="text/css">
+  <script src="./script/accueil-script.js" defer></script>
+  <title>SpendWise - Accueil</title>
+</head>
+<body>
+  <header>
+    <h1>SPEND<span class="title-sw-white">WISE</span></h1>
+    <nav>
+      <a href="accueil.html" class="active">Accueil</a>
+      <a href="add-transac.html">Ajouter une transaction</a>
+      <a href="transac.html">Voir les transactions</a>
+      <a href="visualisation.html">Visualisation</a>
+    </nav>
+    <a href="index.html" class="button-exit">Quitter</a>
+  </header>
+
+  <main>
+    <section>
+      <h2>Solde actuel : <span id="solde">0 €</span></h2>
+    </section>
+
+    <section>
+      <h3>Résumé des transactions</h3>
+      <ul id="resume">
+        <li>Revenu : <span id="revenu-total">0 €</span></li>
+        <li>Dépense : <span id="depense-total">0 €</span></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2024 SpendWise. Tous droits réservés.</p>
+  </footer>
+</body>
+</html>

@@ -1,6 +1,5 @@
 import express from 'express';
 const router = express.Router(); 
-//Possibilité utiliser luxon ou moment 
 import transactionController from '../controllers/transactions.js';
 
 //Récuperer toutes les transactions 
