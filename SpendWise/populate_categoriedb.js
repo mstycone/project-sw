@@ -17,7 +17,7 @@ const initializeCategories = async () => {
             { name: 'Restaurants/cafés', type: 'Dépense'},
             { name: 'Abonnements', type: 'Dépense'},
             { name: 'Salaire', type: 'Revenu' },
-            { name: 'Prime&bonus', type: 'Dépense'},
+            { name: 'Prime&bonus', type: 'Revenu'},
             { name: 'Investissements', type: 'Revenu' },
             { name: 'Loisirs', type: 'Dépense' },
             { name: 'Épargne', type: 'Revenu' },

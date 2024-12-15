@@ -1,61 +1,62 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // Récupérer les transactions depuis le backend avec fetch 
-    fetch('/transactions')
-    .then(response => response.json())
-    .then(transactions => {
+document.addEventListener("DOMContentLoaded", async function () {
+    try {
+        const response = await fetch('/transactions');
+        if (!response.ok) {
+            throw new Error('Erreur lors de la récupération des transactions');
+        }
+        const transactions = await response.json();
+
         // Initialiser les variables pour les dépenses et revenus
         let depenseTotal = 0;
         let revenueTotal = 0;
-        // Initialiser un objet pour les dépenses par catégorie
         let categories = {};
 
         // Parcourir les transactions pour calculer les totaux
         transactions.forEach((transaction) => {
             if (transaction.type === "dépense") {
                 depenseTotal += parseFloat(transaction.montant);
-                // Catégoriser les dépenses
                 if (categories[transaction.categorie]) {
                     categories[transaction.categorie] += parseFloat(transaction.montant);
                 } else {
-                  categories[transaction.categorie] = parseFloat(transaction.montant);
-              }
-          } else if (transaction.type === "revenu") {
-              revenueTotal += parseFloat(transaction.montant);
-          }
+                    categories[transaction.categorie] = parseFloat(transaction.montant);
+                }
+            } else if (transaction.type === "revenu") {
+                revenueTotal += parseFloat(transaction.montant);
+            }
         });
 
         // Configuration du diagramme de comparaison
-        let ctx1 = document.getElementById('transactionChart').getContext('2d');
-        let transactionChart = new Chart(ctx1, {
-            type: 'bar', // Type de graphique
+        const ctx1 = document.getElementById('transactionChart').getContext('2d');
+        const transactionChart = new Chart(ctx1, {
+            type: 'bar',
             data: {
-                labels: ['Revenus', 'Dépenses'], // Légendes
+                labels: ['Revenus', 'Dépenses'],
                 datasets: [{
                     label: 'Montant (€)',
-                    data: [revenueTotal, depenseTotal], // Données à visualiser
+                    data: [revenueTotal, depenseTotal],
                     backgroundColor: [
-                        'rgba(75, 192, 192, 0.6)', // Couleur pour les revenus
-                        'rgba(255, 99, 132, 0.6)'  // Couleur pour les dépenses
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(255, 99, 132, 0.6)'
                     ],
                     borderColor: [
-                        'rgba(75, 192, 192, 1)',    // Bordure pour les revenus
-                        'rgba(255, 99, 132, 1)'     // Bordure pour les dépenses
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)'
                     ],
                     borderWidth: 1
                 }]
             },
-           options: {
+            options: {
                 scales: {
                     y: {
-                        beginAtZero: true // Le graphique commence à zéro
+                        beginAtZero: true
                     }
                 },
-               plugins: {
+                plugins: {
                     legend: {
-                        display: true, // Afficher la légende
+                        display: true,
                         position: 'top'
-                   },
-                   title: {
+                    },
+                    title: {
                         display: true,
                         text: 'Visualisation des revenus et dépenses'
                     }
@@ -68,14 +69,14 @@ document.addEventListener("DOMContentLoaded", function() {
         const expenseData = Object.values(categories);
 
         // Configuration du diagramme en cercle
-        let ctx2 = document.getElementById('expenseChart').getContext('2d');
-        let expenseChart = new Chart(ctx2, {
-            type: 'pie', // Type de graphique
+        const ctx2 = document.getElementById('expenseChart').getContext('2d');
+        const expenseChart = new Chart(ctx2, {
+            type: 'pie',
             data: {
-                labels: expenseLabels, // Catégories de dépenses
+                labels: expenseLabels,
                 datasets: [{
                     label: 'Dépenses par catégorie',
-                    data: expenseData, // Données des dépenses par catégorie
+                    data: expenseData,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.6)',
                         'rgba(54, 162, 235, 0.6)',
@@ -88,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }]
             },
             options: {
-                responsive: true, // Adaptation responsive
+                responsive: true,
                 plugins: {
                     legend: {
                         display: true,
@@ -101,8 +102,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
         });
-    })
-    .catch(error => {
-        console.error(`Erreur lors de la récupération des données :, ${error}`);
-    });
+    } catch (error) {
+        console.error(`Erreur lors de la récupération des données : ${error}`);
+        alert('Une erreur est survenue lors du chargement des données.');
+    }
 });

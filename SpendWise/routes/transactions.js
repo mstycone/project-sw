@@ -14,6 +14,9 @@ router.delete('/:id', transactionController.deleteTransaction);
 //Modifier une transaction 
 router.put('/:id', transactionController.updateTransaction);
 
+// Add a new route for fetching the last 5 transactions
+router.get('/', transactionController.getLastTransactions);
+
 //Middleware de gestions des erreurs 
 router.use((err, req, res, next) => {
     console.error('Erreur dans transaction route', err);
