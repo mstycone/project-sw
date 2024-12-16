@@ -131,7 +131,7 @@ main {
 
 .solde, .resume-transaction, .last-transactions {
   margin: 10px;
-  padding-top : 10px;
+  padding : 0px 10px;
   width: calc(100% - 70px);
   text-align: center;
   background-color: #fff;

@@ -35,7 +35,13 @@ const addTransaction = asyncHandler(async (req, res) => {
 
     try {
         await newTransaction.save();
-        res.status(201).json(newTransaction);
+        // Calculer les valeurs mises à jour
+        const totalIncome = await Transaction.aggregate([{ $match: { type: 'revenu' } }, { $group: { _id: null, total: { $sum: '$montant' } } }]);
+        const totalExpense = await Transaction.aggregate([{ $match: { type: 'dépense' } }, { $group: { _id: null, total: { $sum: '$montant' } } }]);
+        const currentBalance = (totalIncome[0]?.total || 0) - (totalExpense[0]?.total || 0);
+
+        // Renvoie les nouvelles valeurs
+        res.status(201).json({ newTransaction, currentBalance, totalIncome: totalIncome[0]?.total || 0, totalExpense: totalExpense[0]?.total || 0 });
     } catch (error) {
         console.error('Error saving transaction:', error); // Log any errors
         res.status(500).json({ message: 'Erreur lors de l\'ajout de la transaction' });
