@@ -30,3 +30,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       console.error('Erreur lors de la récupération des transactions:', error);
   }
 });
+
+const button = document.querySelector('.see-transac');
+    button.addEventListener('click', () => {
+      window.location.href = '../transac.html';
+    });

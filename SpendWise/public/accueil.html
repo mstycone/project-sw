@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../style-sw/style.css" type="text/css">
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
   <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
   <script src="./script/accueil-script.js" defer></script>
   <script src="./script/add-transac-script.js" defer></script>
@@ -54,12 +55,13 @@
           </select>
         </div>
   
-        <div class="form-group">
+        <div class="categorie-group">
           <label for="categorie">Catégorie :</label>
           <select id="categorie" name="categorie" required>
             <option value="" disabled selected>-- Choisir la catégorie --</option>
             <!--Ajout dynamique des options de catégorie ici-->
           </select>
+          <button type="submit" id="add-category">+</button>
         </div>
   
         <div class="form-group">
@@ -81,18 +83,36 @@
     <section class="last-transactions">
       <h2>Transactions récentes</h2>
       <div id="dernieres-transactions" class="transactions-list"></div>
-      <button class="see-transac" type="button">Voir/Modifier les transactions</button>
+      <button class="see-transac" type="button" data-tippy-content="Voir/Modifier/Supprimer les transactions">Afficher les transactions</button>
     </section>
   </main>
 
   <footer>
     <p>© 2024 SpendWise. Tous droits réservés.</p>
   </footer>
+  <!--cdn dev tippy.js-->
+  <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+  <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+  <!-- cdn prod tippy.js 
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script> --> 
   <script>
-    const button = document.querySelector('.see-transac');
-    button.addEventListener('click', () => {
-      window.location.href = '../transac.html';
+
+tippy.setDefaultProps({
+      delay: 50,
+      animation: 'material',
+      arrow: false,
+      duration : [30, 500],
+      theme: 'retro', 
+      followCursor: 'horizontal', 
     });
+
+    tippy ('#add-category', {
+      content: 'Ajouter une catégorie',
+    });
+
+    tippy ('[data-tippy-content]');
+  
   </script>
 </body>
 </html>
