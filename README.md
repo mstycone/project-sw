@@ -101,14 +101,18 @@ Voici un aperçu de l'application :
 1. **Page d'introduction** : 
    <img src="./Wireframe_Projet S3/cap-intro.png">
    
+   
 2. **Page d'accueil (index.html)** :
    <img src="./Wireframe_Projet S3/cap-accueil-pt1.png">
+   
    
 3. **Voir les transactions (transac.html)** :
    1. Tableau des transactions : 
    <img src="./Wireframe_Projet S3/cap-transaction-new.png">
+   
    2. Vue de la modification d'une transaction : 
    <img src="./Wireframe_Projet S3/cap-transaction-modif.png">
+   
    3. Vue de la modification de la date d'une transaction : 
    <img src="./Wireframe_Projet S3/cap-transaction-exemple-modif-date.png">   
 
