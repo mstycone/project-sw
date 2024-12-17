@@ -29,23 +29,27 @@
 
 **Dépendances installées :**
 
-- **Cookie-parser : ** Permet de lire, analyser et manipuler les cookies envoyés par le client dans les requêtes HTTP.
-- **morgan :**  Enregistre des informations sur chaque requête HTTP dans la console ou un fichier, utile pour le debugging et la surveillance.
-- **path : **Assure la compatibilité des chemins entre différents systèmes d'exploitation
-- **http-errors :** Génère facilement des erreurs avec des codes d'état HTTP (comme 404 ou 500) et des messages personnalisés.
-- **debug : **une librairie pour gérer les logs de débogage dans les applications Node.js. Active ou désactive des logs par namespace.
-- **daysjs :** Un outil de formatage de date plus légère, plus performant et moderne.
-- **express-validator : ** Un outil permettant la validation et la sanitisation (assainir) des données provenant des requêtes HTTP. Améliore la fiabilité et la sécurité.
-- **express-async-handler :** Un outil permet la simplification de la gestion des erreurs. Cet outil se charge des exceptions qui seront redirigé vers le middleware de gestion globale d'erreurs et permet d'écrire du code comme s'il était fonctionnel. Son utilisation permet de simplifier le code et de se passer de blocs `try... catch`.  
+- **Cookie-parser** : Permet de lire, analyser et manipuler les cookies envoyés par le client dans les requêtes HTTP.
+- **morgan** :  Enregistre des informations sur chaque requête HTTP dans la console ou un fichier, utile pour le debugging et la surveillance.
+- **path** : Assure la compatibilité des chemins entre différents systèmes d'exploitation
+- **http-errors** : Génère facilement des erreurs avec des codes d'état HTTP (comme 404 ou 500) et des messages personnalisés.
+- **debug** : une librairie pour gérer les logs de débogage dans les applications Node.js. Active ou désactive des logs par namespace.
+- **daysjs** (via cdn): Une bibliothèque JavaScript permettant le formatage de date plus légère, plus performant et moderne.
+- **express-validator** : Un outil permettant la validation et la sanitisation (assainir) des données provenant des requêtes HTTP. Améliore la fiabilité et la sécurité.
+- **express-async-handler** : Un outil permet la simplification de la gestion des erreurs. Cet outil se charge des exceptions qui seront redirigé vers le middleware de gestion globale d'erreurs et permet d'écrire du code comme s'il était fonctionnel. Son utilisation permet de simplifier le code et de se passer de blocs `try... catch`.  
+- **dotenv** : Un outil qui permet de stocker les variables d'environnement dans un fichier `.env` 
+- **tippy.js** (via cdn): une bibliothèque JavaScript qui permet d'ajouter facilement des tooltips(bulle d'informations), popovers et autres éléments interactifs pour une meilleure expérience utilisateur. 
+
+> Note : Pour toute information, veuillez vous référer au site officiel de la dépendance ou bibliothèque en question
 
 **Outils de développement :**
 
 - **Nodemon** : Utilisé pour recharger automatiquement l'application lors de modifications dans le code.
-- **Eslint :** Un outil de développement analysant le code pour détecter les éventuelles erreurs et appliquer des règles de style. Dans l'objectif d'améliorer la qualité et la cohérence du code. 
+- **Eslint** :  Un outil de développement analysant le code pour détecter les éventuelles erreurs et appliquer des règles de style. Dans l'objectif d'améliorer la qualité et la cohérence du code. 
 - **Postman** : Outil pour tester les API RESTful et vérifier les routes du serveur.
-- **Stylelint : **
+- **Stylelint** : 
 
-**Ajout d'un script de démarrage `package.json` : **
+**Ajout d'un script de démarrage `package.json` :**
 
 ![cap-script-start](/Users/arnaudabou-bacar/Desktop/me/BTS SIO/2nd Year /Cours BTSIO2/Projets BTS SIO/Projet S3/cap-script-start.png)
 
