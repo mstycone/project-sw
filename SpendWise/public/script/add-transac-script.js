@@ -12,8 +12,8 @@ async function loadCategories() {
 
       // Filtrer les catégories selon le type sélectionné
       const filteredCategories = data.filter(category =>
-          (selectedType === 'revenu' && category.type === 'Revenu') ||
-          (selectedType === 'dépense' && category.type === 'Dépense')
+          (selectedType === 'revenu' && category.type === 'revenu') ||
+          (selectedType === 'dépense' && category.type === 'dépense')
       );
 
       const selectCategorie = document.getElementById('categorie');
@@ -97,7 +97,11 @@ document.getElementById('transac-form').addEventListener('submit', async functio
       }
 
       // Réinitialiser le formulaire
-      this.reset();
+      this.reset(); 
+      
+      // Réinitialiser le champ de catégorie à la valeur par défaut
+      const selectCategorie = document.getElementById('categorie');
+      selectCategorie.value = ''; // Réinitialiser à la valeur par défaut
 
       // Afficher un message de confirmation
       const feedback = document.getElementById('feedback');

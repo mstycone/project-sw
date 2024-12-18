@@ -19,10 +19,13 @@ const addTransaction = asyncHandler(async (req, res) => {
     const formattedDate = new Date(date);
     
     // Fetch the ObjectId for the category
-    const category = await Categorie.findOne({ _id: categoryName });
+    let category = await Categorie.findOne({ name: categoryName });
     if (!category) {
         console.log('Category not found:', categoryName); // Log if category is not found
-        return res.status(400).json({ message: 'Catégorie non trouvée' });
+        // Create a new category if it doesn't exist
+        const newCategory = new Categorie({ name: categoryName, type: type });
+        category = await newCategory.save(); // Save the new category
+        console.log('New category created:', category); // Log the new category creation
     }
 
     const newTransaction = new Transaction({ 
@@ -99,7 +102,7 @@ const transactionController = {
     deleteTransaction,
     updateTransaction,
     getAllCategories,
-    getLastTransactions // Add the new function to the exported object
+    getLastTransactions 
 };
 
 //Exportation objet par défaut 
