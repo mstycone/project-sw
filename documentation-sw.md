@@ -315,7 +315,15 @@ Les tests manuels ont été effectués pour vérifier le bon fonctionnement des 
 
    
 
-2. Autre
+2. Modification des valeurs du champ `type` de la collection `categories`: 
+   ```mongodb
+   db.categories.updateMany (
+      {},
+      [{ $set: { type: { $toLower: "$type"} } }]
+   );
+   ```
+   
+3. Autre
 
 
 
