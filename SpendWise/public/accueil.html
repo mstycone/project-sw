@@ -82,9 +82,13 @@
     </section>
 
     <section class="last-transactions">
-      <h2>Transactions récentes</h2>
-      <div id="dernieres-transactions" class="transactions-list"></div>
-      <button class="see-transac" type="button" data-tippy-content="Voir/Modifier/Supprimer les transactions">Afficher les transactions</button>
+      <div class="last-transactions-header">
+        <h2>Transactions récentes</h2>
+        <button class="see-transac" type="button" data-tippy-content="Voir/Modifier/Supprimer une transaction">Afficher les transactions</button>
+      </div>
+      <ul id="dernieres-transactions" class="transactions-list">
+        <!-- Affichage dynamique des transactions ici -->
+      </ul>
     </section>
   </main>
 
@@ -112,8 +116,11 @@
       content: 'Ajouter une catégorie',
     });
 
+    tippy ('#montant', {
+      content: 'Veuillez saisir un montant positif',
+    })
+
     tippy ('[data-tippy-content]');
-  
   </script>
 </body>
 </html>

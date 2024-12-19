@@ -42,8 +42,15 @@ async function loadCategories() {
   }
 }
 
+const selectCategorie = document.getElementById('categorie');
+const selectType = document.getElementById('type');
+
 // Charger les catégories au changement du type
-document.getElementById('type').addEventListener('change', loadCategories);
+selectType.addEventListener('change', () => {
+    loadCategories();
+    // Désactiver le sélecteur de catégorie si aucun type n'est sélectionné
+    selectCategorie.disabled = selectType.value === '';
+});
 
 // Gérer l'ajout de la transaction
 document.getElementById('transac-form').addEventListener('submit', async function (event) {
@@ -80,15 +87,18 @@ document.getElementById('transac-form').addEventListener('submit', async functio
 
       // Mettre à jour les transactions récentes
       const recentTransactionsContainer = document.getElementById('dernieres-transactions');
-      const transactionElement = document.createElement('div');
-      transactionElement.innerHTML = `
-          <p><strong>Description:</strong> ${transaction.description}</p>
-          
-          <p><strong>Montant:</strong> ${parseFloat(transaction.montant.toFixed(2))} €</p>
-          
-          <p><strong>Date:</strong> ${new Intl.DateTimeFormat('fr-FR').format(new Date(transaction.date))}</p>
-      `;
-      recentTransactionsContainer.insertBefore(transactionElement, recentTransactionsContainer.firstChild); // Insérer en haut
+      const transactionItem = document.createElement('li');
+      transactionItem.classList.add('transaction-item');
+      const typeClass = transaction.type.toLowerCase() === 'revenu' ? 'revenu' : 'depense';
+      transactionItem.innerHTML = `
+            <div class="transaction-details">
+                <span class="transaction-category">${transaction.categorie || 'Non catégorisé'}</span>
+                <span class="transaction-description">${transaction.description}</span>
+                <span class="transaction-date">${new Date(transaction.date).toLocaleDateString()}</span>
+            </div>
+            <div class="transaction-amount ${typeClass}">${transaction.montant} €</div>
+        `;
+      recentTransactionsContainer.insertBefore(transactionItem, recentTransactionsContainer.firstChild); // Insérer en haut
 
       // Limiter à 5 transactions récentes
       const transactions = recentTransactionsContainer.children;

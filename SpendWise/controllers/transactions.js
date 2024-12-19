@@ -84,6 +84,7 @@ const updateTransaction = asyncHandler(async (req, res) => {
 
 const getAllCategories = asyncHandler(async (req, res) => {
     const categories = await Categorie.find();
+    console.log('Categories retrieved:', categories); // Log the retrieved categories
     res.status(200).json(categories);
 });
 

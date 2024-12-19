@@ -12,8 +12,11 @@ document.addEventListener("DOMContentLoaded", async () => {
           if (transactions.length === 0) {
               let emptyRow = document.createElement("tr");
               let emptyCell = document.createElement("td");
-              emptyCell.setAttribute("colspan", 5); // Fusionne les colonnes
+              emptyCell.setAttribute("colspan", 6); // Fusionne les colonnes
               emptyCell.textContent = "Aucune transaction à afficher";
+              emptyCell.style.textAlign = 'center';
+              emptyCell.style.fontWeight = 'bold';
+              emptyCell.style.color = 'grey';
               emptyRow.appendChild(emptyCell);
               transacList.appendChild(emptyRow);
           } else {
@@ -21,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                   let row = document.createElement("tr");
 
                   let catCell = document.createElement("td");
-                  catCell.textContent = transaction.categorie;
+                  catCell.textContent = transaction.categorie.name; // Afficher le nom de la catégorie
                   row.appendChild(catCell);
 
                   let descCell = document.createElement("td");
