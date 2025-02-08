@@ -3,29 +3,38 @@ import Categorie from '../models/categories.js';
 import asyncHandler from 'express-async-handler'; //gestion auto des exceptions 
 
 //Récuperer les transactions 
-const getAllTransactions = asyncHandler(async (req, res) => {    
+const getAllTransactions = asyncHandler(async (req, res) => {
+    console.log('Requête pour récupérer toutes les transactions'); // Log de la requête
     const transactions = await Transaction.find().populate('categorie', 'name'); 
     const formattedTransactions = transactions.map(transaction => ({
         ...transaction.toObject(),
         categorie: transaction.categorie.name 
     }));
+    console.log('Transactions avant formatage:', transactions);
+    console.log('Transactions formatées:', formattedTransactions);
+
     res.json(formattedTransactions);
 });
 
 //Ajout d'une nouvelle transaction 
 const addTransaction = asyncHandler(async (req, res) => {
+    console.log('Données de la transaction reçues:', req.body); // Log des données reçues
     const { type, categorie: categoryName, description, montant, date } = req.body;
-    console.log('Transaction data received:', req.body); // Log incoming data
+    console.log('Données de la requête reçues:', req.body); // Log des données reçues
+    console.log('Nom de la catégorie:', categoryName); // Log du nom de la catégorie
     const formattedDate = new Date(date);
     
     // Fetch the ObjectId for the category
     let category = await Categorie.findOne({ name: categoryName });
+    console.log('Catégorie recherchée:', categoryName); // Log de la catégorie recherchée
     if (!category) {
-        console.log('Category not found:', categoryName); // Log if category is not found
+        console.log('Catégorie introuvable:', categoryName); // Log if category is not found
         // Create a new category if it doesn't exist
         const newCategory = new Categorie({ name: categoryName, type: type });
         category = await newCategory.save(); // Save the new category
-        console.log('New category created:', category); // Log the new category creation
+        console.log('Nouvelle catégorie créée:', category); // Log the new category creation
+    } else {
+        console.log('Catégorie trouvée:', category); // Log de la catégorie trouvée
     }
 
     const newTransaction = new Transaction({ 
@@ -46,7 +55,7 @@ const addTransaction = asyncHandler(async (req, res) => {
         // Renvoie les nouvelles valeurs
         res.status(201).json({ newTransaction, currentBalance, totalIncome: totalIncome[0]?.total || 0, totalExpense: totalExpense[0]?.total || 0 });
     } catch (error) {
-        console.error('Error saving transaction:', error); // Log any errors
+        console.error('Erreur de sauvegarde de la transaction:', error); // Log any errors
         res.status(500).json({ message: 'Erreur lors de l\'ajout de la transaction' });
     }
 });
@@ -91,9 +100,11 @@ const getAllCategories = asyncHandler(async (req, res) => {
 // Récupérér les 5 dernières transactions 
 const getLastTransactions = asyncHandler(async (req, res) => {
     const transactions = await Transaction.find()
+        .populate('categorie', 'name') // Peupler le nom de la catégorie
         .sort({ date: -1 }) //organiser par date décroissant
         .limit(5); //Limiter aux 5 dernières transactions 
     res.status(200).json(transactions);
+    console.log('Transactions avant formatage:', transactions);
 });
 
 //Regroupement toutes méthodes dans un objet  

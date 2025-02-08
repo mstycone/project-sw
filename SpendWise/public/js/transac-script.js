@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const fetchTransactions = async () => {
+const fetchTransactions = async () => {
+    console.log("Récupération des transactions..."); // Log pour indiquer que la récupération commence
       try {
           const response = await fetch('/transactions');  // Récupérer toutes les transactions du backend
           if (!response.ok) {
@@ -24,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                   let row = document.createElement("tr");
 
                   let catCell = document.createElement("td");
-                  catCell.textContent = transaction.categorie.name; // Afficher le nom de la catégorie
+                  catCell.textContent = transaction.categorie; // Afficher le nom de la catégorie
                   row.appendChild(catCell);
 
                   let descCell = document.createElement("td");
@@ -51,6 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                   editBtn.setAttribute("class", "button-add-transac");
                   editBtn.textContent = "Modifier";
                   editBtn.addEventListener("click", () => {
+                      const selectElement = document.createElement("select");
                       // Remplacer les cellules par des champs de saisie pour modification
                       catCell.innerHTML = `<input type="text" value="${transaction.categorie}" id="edit-categorie-${index}">`;
                       descCell.innerHTML = `<input type="text" value="${transaction.description}" id="edit-description-${index}">`;

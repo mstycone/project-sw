@@ -7,9 +7,70 @@
     --button-hover-color: #ff5722;
     --border-radius: 8px;
     --font-family: 'Arial', sans-serif;
+    --background-color: #f4f4f4;
+    --background-color2: #fff; 
     --max-width: 1200px;
     --transition-duration: 0.3s;
     --transition-timing-function: ease;
+  }
+
+  .darkmode {
+    --primary-color:rgb(64, 207, 155);
+    --secondary-color: : #002D72;
+    --text-color: #fff;
+    --error-color: #f44336;
+    --button-hover-color: #ff5722;
+    --border-radius: 8px;
+    --font-family: 'Arial', sans-serif;
+    --background-color:rgb(35, 31, 31);
+    --background-color2: rgb(49, 46, 46);
+    --max-width: 1200px;
+    --transition-duration: 0.3s;
+    --transition-timing-function: ease;
+  }
+/*
+  .aqua {
+    --primary-color:rgb(11, 208, 243); 
+    --text-color:rgb(11, 208, 243);
+  }
+  
+  .orange {
+    --primary-color:rgb(249, 165, 30);
+    --text-color:rgb(249, 165, 30);
+  }
+  */  
+
+  /*Bouton dark/light*/
+  #themeToggle {
+    height: 40px; 
+    width: 40px;
+    border-radius: 50%;
+    background-color: var(--background-color);
+    padding: 0;
+    /*center the icon next 3*/
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    position: fixed; 
+    top: 65px;
+    right: 30px;
+  }  
+
+  #themeToggle svg {
+    fill: var(--primary-color);
+  }
+
+  #themeToggle svg:last-child {
+    display: none;
+  }
+
+  .darkmode #themeToggle svg:first-child {
+    display: none;
+  }
+
+  .darkmode #themeToggle svg:last-child {
+    display: block; /*occupe toute largeur 
+    et pousse élément non affiché (none) en dessous*/
   }
   
   body {
@@ -17,11 +78,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #f4f4f4;
+    background-color: var(--background-color);
     color: var(--text-color);
     line-height: 1.6;
   }
-    
+
   header {
     position: relative;
     background-color: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
@@ -85,6 +146,7 @@
     right:35px; 
     transform: translateY(-30%); 
     color: var(--primary-color);
+    background-color: var( --background-color2);
     padding: 5px 10px;
     border-radius: var(--border-radius);
     text-decoration: none;
@@ -134,7 +196,7 @@
     padding : 0px 5px;
     width: calc(100% - 85px);
     text-align: center;
-    background-color: #fff;
+    background-color: var(--background-color2);
     border-radius: var(--border-radius);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
@@ -144,7 +206,7 @@
     padding : 0px 5px;
     width: calc(100% - 35px);
     text-align: center;
-    background-color: #fff;
+    background-color: var(--background-color2);
     border-radius: var(--border-radius);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
@@ -177,7 +239,7 @@
     flex-direction: column;
     width: calc(100% - 85px);
     margin: auto;
-    background-color: #fff;
+    background-color: var(--background-color2);
     padding: 30px 30px 10px 30px; 
     border-radius: var(--border-radius);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -187,6 +249,7 @@
     display: flex; 
     align-items: center; 
     margin-bottom: 10px; 
+    background-color: var(--background-color2);
   }
   
   .categorie-group {
@@ -293,7 +356,7 @@
   }
   
   .transaction-item:hover {
-    background-color: #f9f9f9;
+    background-color:var(--background-color);
   }
   
   .transaction-details {
@@ -411,7 +474,7 @@
   }
     
   th {
-    background-color: #f4f4f4;
+    background-color:var(--background-color);
     text-align: center;
   }
   
@@ -420,12 +483,4 @@
     background-color: white;
     padding: 0 5px;
     border-radius: var(--border-radius);
-  }
-  
-  /* Images responsives (au cas où) */
-  img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
   }

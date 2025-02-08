@@ -58,11 +58,13 @@ document.getElementById('transac-form').addEventListener('submit', async functio
 
   const transaction = {
       type: document.getElementById('type').value,
-      categorie: document.getElementById('categorie').value,
+      categorie: document.getElementById('categorie').options[document.getElementById('categorie').selectedIndex].text,
       description: document.getElementById('description').value,
       montant: parseFloat(document.getElementById('montant').value.replace(",", ".")),
       date: new Date()
   };
+
+  console.log('Transaction avant envoi :', transaction);
 
   try {
       const response = await fetch('/transactions', {
@@ -89,16 +91,22 @@ document.getElementById('transac-form').addEventListener('submit', async functio
       const recentTransactionsContainer = document.getElementById('dernieres-transactions');
       const transactionItem = document.createElement('li');
       transactionItem.classList.add('transaction-item');
-      const typeClass = transaction.type.toLowerCase() === 'revenu' ? 'revenu' : 'depense';
+      const typeClass = transaction.type === 'revenu' ? 'revenu' : 'depense';
       transactionItem.innerHTML = `
             <div class="transaction-details">
-                <span class="transaction-category">${transaction.categorie || 'Non catégorisé'}</span>
+                <span class="transaction-category">${transaction.categorie}</span>
                 <span class="transaction-description">${transaction.description}</span>
                 <span class="transaction-date">${new Date(transaction.date).toLocaleDateString()}</span>
             </div>
             <div class="transaction-amount ${typeClass}">${transaction.montant} €</div>
         `;
       recentTransactionsContainer.insertBefore(transactionItem, recentTransactionsContainer.firstChild); // Insérer en haut
+
+      //Effacer message "Aucune transaction" lors submit une transaction
+      const noTransactionMessage = document.getElementById("no-transaction");
+      if (noTransactionMessage){
+        noTransactionMessage.style.display = "none";
+      }
 
       // Limiter à 5 transactions récentes
       const transactions = recentTransactionsContainer.children;
@@ -112,6 +120,7 @@ document.getElementById('transac-form').addEventListener('submit', async functio
       // Réinitialiser le champ de catégorie à la valeur par défaut
       const selectCategorie = document.getElementById('categorie');
       selectCategorie.value = ''; // Réinitialiser à la valeur par défaut
+      selectCategorie.disabled = selectCategorie.value === '';
 
       // Afficher un message de confirmation
       const feedback = document.getElementById('feedback');
