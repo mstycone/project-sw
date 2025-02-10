@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         'rgba(75, 192, 192, 1)',
                         'rgba(255, 99, 132, 1)'
                     ],
-                    borderWidth: 1
+                    borderWidth: 0.5
                 }]
             },
             options: {
@@ -54,11 +54,12 @@ document.addEventListener("DOMContentLoaded", async function () {
                 plugins: {
                     legend: {
                         display: true,
-                        position: 'top'
+                        position: 'top',
                     },
                     title: {
                         display: true,
-                        text: 'Visualisation des revenus et dépenses'
+                        text: 'Visualisation des revenus et dépenses',
+                        color: '#ff5722'
                     }
                 }
             }
@@ -97,7 +98,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                     },
                     title: {
                         display: true,
-                        text: 'Répartition des Dépenses'
+                        text: 'Répartition des Dépenses',
+                        color: '#ff5722'
                     }
                 }
             }

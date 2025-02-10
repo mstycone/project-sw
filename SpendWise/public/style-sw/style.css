@@ -7,8 +7,9 @@
     --button-hover-color: #ff5722;
     --border-radius: 8px;
     --font-family: 'Arial', sans-serif;
-    --background-color: #f4f4f4;
+    --background-color:rgb(244, 244, 244);
     --background-color2: #fff; 
+    --dl-background-color: rgba(244, 244, 244, 0.5);
     --max-width: 1200px;
     --transition-duration: 0.3s;
     --transition-timing-function: ease;
@@ -16,7 +17,7 @@
 
   .darkmode {
     --primary-color:rgb(64, 207, 155);
-    --secondary-color: : #002D72;
+    --secondary-color: rgb(244, 244, 244);
     --text-color: #fff;
     --error-color: #f44336;
     --button-hover-color: #ff5722;
@@ -24,6 +25,7 @@
     --font-family: 'Arial', sans-serif;
     --background-color:rgb(35, 31, 31);
     --background-color2: rgb(49, 46, 46);
+    --dl-background-color: rgba(35, 31, 31, 0.5);
     --max-width: 1200px;
     --transition-duration: 0.3s;
     --transition-timing-function: ease;
@@ -45,14 +47,16 @@
     height: 40px; 
     width: 40px;
     border-radius: 50%;
-    background-color: var(--background-color);
+    background-color: var(--dl-background-color);
     padding: 0;
     /*center the icon next 3*/
     display: flex; 
     justify-content: center;
     align-items: center;
     position: fixed; 
-    top: 65px;
+    /*élément dessous complémentaire avec position*/
+    z-index: 9999; /*Place élément tout haut pile*/
+    top: 57.5px;
     right: 30px;
   }  
 
@@ -86,7 +90,6 @@
   header {
     position: relative;
     background-color: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
     padding: 10px;
     text-align: center;
     width: 100%; /*Éviter coupure lors modif d'une transaction*/
@@ -307,21 +310,6 @@
     transition: background-color 0.3s ease;
   }
   
-  .button-add-transac {
-    padding: 10px;
-    background-color: white;
-    color: var(--primary-color);
-    border: none;
-    border-radius: 4px;
-    width: calc(100% - 20px); /* Adjust width to account for margin */
-    margin-right: 20px; /* Increase margin to the right */
-  }
-  
-  .button-add-transac:hover {
-    color: white;
-    background-color: var(--button-hover-color);
-  }
-  
   #submit {
     padding: 12px;
     margin: 20px;
@@ -421,6 +409,7 @@
   canvas {
     max-width: 100%; 
     height: auto; 
+    color: var(--text-color);
   }
   
   /* Media query pour écrans plus étroits */
@@ -470,12 +459,27 @@
     
   th, td {
     padding: 10px;
-    text-align: left;
+    text-align: center;
   }
     
   th {
     background-color:var(--background-color);
     text-align: center;
+  }
+
+  .button-add-transac {
+    padding: 10px;
+    background-color: var(--background-color2);
+    color: var(--primary-color);
+    border: none;
+    border-radius: 4px;
+    width: calc(100% - 20px); /* Adjust width to account for margin */
+    margin-right: 20px; /* Increase margin to the right */
+  }
+  
+  .button-add-transac:hover {
+    color: white;
+    background-color: var(--button-hover-color);
   }
   
   .title-sw-white {
