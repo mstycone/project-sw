@@ -6,7 +6,7 @@ const TransacSchema = new Schema ({
     type: {
         type: String,
         required: true,
-        enum: ['Revenu', 'Dépense', 'revenu', 'dépense'],    
+        enum: ['revenu', 'dépense'],    
     },
     categorie: {
         type: Schema.Types.ObjectId, //Stocke l'objetid de la catégorie

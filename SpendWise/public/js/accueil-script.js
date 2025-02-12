@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 });
 
-const button = document.querySelector('.see-transac');
+const button = document.getElementById('see-transac');
     button.addEventListener('click', () => {
       window.location.href = '../transac.html';
     });

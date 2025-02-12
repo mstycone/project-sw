@@ -45,7 +45,7 @@ async function loadCategories() {
 const selectCategorie = document.getElementById('categorie');
 const selectType = document.getElementById('type');
 
-// Charger les catégories au changement du type
+// Charger les catégories au changement du type transaction
 selectType.addEventListener('change', () => {
     loadCategories();
     // Désactiver le sélecteur de catégorie si aucun type n'est sélectionné

@@ -7,7 +7,7 @@
     --button-hover-color: #ff5722;
     --border-radius: 8px;
     --font-family: 'Arial', sans-serif;
-    --background-color:rgb(244, 244, 244);
+    --background-color:rgb(250, 250, 250);
     --background-color2: #fff; 
     --dl-background-color: rgba(244, 244, 244, 0.5);
     --max-width: 1200px;
@@ -320,6 +320,17 @@
     width: calc(100% - 40px);/*Ajustemt largeur comptant margin */
   }
   
+  #see-transac {
+    color: white;
+    background-color: var(--primary-color);
+    text-decoration: none;
+  }  
+
+  #see-transac:hover{
+    background-color: var(--button-hover-color);
+    color: white;
+  }
+
   #submit:hover {
     background-color: var(--button-hover-color);
   }
