@@ -97,8 +97,8 @@ document.getElementById('transac-form').addEventListener('submit', async functio
                 <span class="transaction-category">${transaction.categorie}</span>
                 <span class="transaction-description">${transaction.description}</span>
                 <span class="transaction-date">${new Date(transaction.date).toLocaleDateString()}</span>
+                <span class="transaction-amount ${typeClass}">${transaction.montant} €</span>
             </div>
-            <div class="transaction-amount ${typeClass}">${transaction.montant} €</div>
         `;
       recentTransactionsContainer.insertBefore(transactionItem, recentTransactionsContainer.firstChild); // Insérer en haut
 

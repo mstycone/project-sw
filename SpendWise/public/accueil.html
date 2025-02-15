@@ -86,7 +86,7 @@
   
         <div  class="form-group">
           <label for="montant">Montant :</label>
-          <input type="number" id="montant" step="0.01" name="montant" placeholder="0.00" required>
+          <input type="number" min="0" id="montant" step="0.01" name="montant" placeholder="0.00" required>
         </div>
   
         <button id="submit" type="submit">Ajouter la transaction</button>
@@ -124,7 +124,7 @@
       animation: 'material',
       arrow: false,
       duration : [30, 500],
-      theme: 'retro', //Semble non fonctionnel  
+      theme: 'translucent', //Semble non fonctionnel  
     });
 
     tippy ('#add-category', {
@@ -133,7 +133,8 @@
 
     tippy ('#montant', {
       content: 'Veuillez saisir un montant positif',
-      followCursor: 'horizontal'
+      followCursor: 'horizontal',
+      placement: 'bottom-start',
     })
 
     tippy ('[data-tippy-content]');
@@ -143,5 +144,12 @@
       arrow: true,
     });
   </script>
+    <!-- Latest compiled and minified JavaScript 
+   plugin utc dayjs -->
+   <script src="https://unpkg.com/dayjs"></script>
+   <script src="https://unpkg.com/dayjs-plugin-utc"></script>
+   <script>
+     dayjs.extend(dayjsPluginUTC.default)
+   </script> 
 </body>
 </html>

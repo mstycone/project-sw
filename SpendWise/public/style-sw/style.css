@@ -206,7 +206,7 @@
   
   .last-transactions {
     margin: 20px 10px;
-    padding : 0px 5px;
+    padding : 5px 10px 5px 10px;
     width: calc(100% - 35px);
     text-align: center;
     background-color: var(--background-color2);
@@ -216,6 +216,15 @@
 
   .last-transactions-header:first-child {
     padding-top: 2.5px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .last-transactions-header {
+    padding: 2.5px 0;
+    margin-bottom: 5px;
+    text-align: center;
+    align-items: center;
   }
 
   #solde, #revenu-total, #depense-total {
@@ -343,10 +352,12 @@
   
   .transaction-item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 15px;
-    border-bottom: 1px solid #ddd;
+    padding: 5px;
+    background:var(--background-color2);
+    margin-bottom: 8px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
     transition: background-color var(--transition-duration);
   }
   
@@ -361,6 +372,9 @@
   .transaction-details {
     display: flex;
     flex-direction: column;
+    gap: 4px;
+    flex: 1; /*prend place dispo*/
+    min-width: 200px
   }
   
   .transaction-category {
@@ -498,4 +512,10 @@
     background-color: white;
     padding: 0 5px;
     border-radius: var(--border-radius);
+  }
+
+  #no-transaction {
+    font-weight: bold;
+    color: gray;
+    padding: 10px 0;
   }

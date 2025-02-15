@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style-sw/style.css" type="text/css">
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
   <script src="./js/visual-script.js" defer></script>
   <script src="./js/theme-script.js" defer></script>
   <title>SpendWise - Visualisation</title>
@@ -34,6 +35,14 @@
       </select>
       -->
       </div>
+      <div class="periodfilter">
+        <select name="filter" id="periodfilter">
+          <option value="currentMonth" selected>Mois actuel</option>
+          <option value="last30days" >30 derniers jours</option>
+          <option value="last7days">7 derniers jours</option>
+          <option value="currentYear">Année actuel</option>
+        </select>
+      </div>
         <div class="conteneur-graph">
             <div class="graph">
                 <h2>Comparaison des dépenses/revenus</h2>
@@ -48,5 +57,13 @@
   <footer>
     <p>© 2024 SpendWise. Tous droits réservés.</p>
   </footer>
+      <!-- Latest compiled and minified JavaScript 
+   plugin utc dayjs -->
+   <script src="https://unpkg.com/dayjs"></script>
+   <script src="https://unpkg.com/dayjs-plugin-utc"></script>
+   <script>
+     dayjs.extend(dayjsPluginUTC.default)
+   </script> 
+</body>
 </body>
 </html>

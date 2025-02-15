@@ -5,6 +5,9 @@ import transactionController from '../controllers/transactions.js';
 //Récuperer toutes les transactions 
 router.get('/', transactionController.getAllTransactions);
 
+// Récupérer les 5 dernières transactions
+router.get('/last-5', transactionController.getLastTransactions);
+
 //Ajouter une nouvelle transaction 
 router.post('/', transactionController.addTransaction);
 
@@ -13,9 +16,6 @@ router.delete('/:id', transactionController.deleteTransaction);
 
 //Modifier une transaction 
 router.put('/:id', transactionController.updateTransaction);
-
-// Add a new route for fetching the last 5 transactions
-router.get('/', transactionController.getLastTransactions);
 
 //Middleware de gestions des erreurs 
 router.use((err, req, res, next) => {

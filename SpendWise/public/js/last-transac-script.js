@@ -7,26 +7,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-        const response = await fetch('/transactions');
-        if (!response.ok) throw new Error('Erreur lors de la récupération des transactions');
+        const response = await fetch('/transactions/last-5');
+        if (!response.ok) throw new Error('Erreur lors de la récupération des last 5 transactions');
 
         const transactions = await response.json();
-        const lastFiveTransactions = transactions.slice(-5).reverse(); // Assure qu’on obtient les 5 dernières
-
         transactionsContainer.innerHTML = ''; // Efface le contenu précédent
 
-        if (lastFiveTransactions.length === 0) {
+        if (transactions.length === 0) {
             const noTransactionMessage = document.createElement('li');
+            noTransactionMessage.setAttribute("id", "no-transaction"); //Spécifier pour l'affichage direct cf add-transac-script
             noTransactionMessage.textContent = 'Aucune transaction à afficher';
-            noTransactionMessage.setAttribute("id", "no-transaction"); //Spécifier id pour l'affichage direct cf add-transac-script
-            noTransactionMessage.style.fontWeight = 'bold';
-            noTransactionMessage.style.color = 'gray';
-            noTransactionMessage.style.padding = '10px 0';
             transactionsContainer.appendChild(noTransactionMessage);
             return; // Sortir de la fonction si aucune transaction
         }
 
-        lastFiveTransactions.forEach(transaction => {
+        transactions.forEach(transaction => {
             const transactionItem = document.createElement('li');
             transactionItem.classList.add('transaction-item');
             const typeClass = transaction.type === 'revenu' ? 'revenu' : 'depense';
@@ -40,13 +35,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <span class="transaction-category">${transaction.categorie}</span> 
                     <span class="transaction-description">${transaction.description}</span>
                     <span class="transaction-date">${new Date(transaction.date).toLocaleDateString()}</span>
+                    <span class="transaction-amount ${typeClass}">${transaction.montant} €</span>
                 </div>
-                <div class="transaction-amount ${typeClass}">${transaction.montant} €</div>
             `;
             transactionsContainer.appendChild(transactionItem);
         });
         
-        console.log('Transactions reçues:', lastFiveTransactions);
+        console.log('Transactions reçues:', transactions);
     } catch (error) {
         console.error('Error fetching transactions:', error);
         transactionsContainer.innerHTML = '<p>Erreur lors du chargement des transactions.</p>';

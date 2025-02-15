@@ -4,11 +4,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     //dayjs.extend(dayjs-plugin-utc);//plugin utc dayjs 
 
     // Fonction de filtrage des transactions
-    const filterTransactions = (transactions, filter) => {
+    const filterTransactions = (transactions, filter = 'currentMonth') => {
       const today = dayjs().utc();//use UTC pour today date 
       console.log("Filtrage avec le filtre :", filter);  // Log du filtre utilisé
-
-      if (!filter) filter = 'currentMonth';
 
       switch (filter) {
         case 'last7days':
@@ -106,7 +104,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               // Modifier la transaction
               catCell.innerHTML = `<input type="text" value="${transaction.categorie}" id="edit-categorie-${index}">`;
               descCell.innerHTML = `<input type="text" value="${transaction.description}" id="edit-description-${index}">`;
-              montantCell.innerHTML = `<input type="number" value="${transaction.montant}" id="edit-montant-${index}">`;
+              montantCell.innerHTML = `<input type="number" min="0" step="0.01" value="${transaction.montant}" id="edit-montant-${index}">`;
               typeCell.innerHTML = `
                 <select id="edit-type-${index}">
                   <option value="revenu" ${transaction.type.toLowerCase() === 'revenu' ? 'selected' : ''}>Revenu</option>
