@@ -1,9 +1,8 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const filterSelect = document.getElementById("periodfilter");
-  
-    //dayjs.extend(dayjs-plugin-utc);//plugin utc dayjs 
 
     // Fonction de filtrage des transactions
+    /*
     const filterTransactions = (transactions, filter = 'currentMonth') => {
       const today = dayjs().utc();//use UTC pour today date 
       console.log("Filtrage avec le filtre :", filter);  // Log du filtre utilisé
@@ -28,12 +27,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         default:
           return transactions;
       }
-    };
+    };*/
   
     const fetchTransactions = async (filter) => {
-      console.log("Récupération des transactions...");
+      console.log("Récupération des transactions avec le filtre :", filter);
       try {
-        const response = await fetch('/transactions');  // Récupérer toutes les transactions
+        const response = await fetch('/transactions/filter-transac?filter=${filter}'); 
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -45,28 +44,28 @@ document.addEventListener("DOMContentLoaded", async () => {
           console.error('Elément #transac-list introuvable');
           return;
         }
+
+        transacList.innerHTML = ''; //Effacer ex transactions
   
         const displayEmptyMessage = () => {
           let emptyRow = document.createElement("tr");
           let emptyCell = document.createElement("td");
           emptyCell.setAttribute("colspan", 6); // Fusionne les colonnes
+          emptyCell.setAttribute("class", "cell-vide");
           emptyCell.textContent = "Aucune transaction à afficher";
-          emptyCell.style.textAlign = 'center';
-          emptyCell.style.fontWeight = 'bold';
-          emptyCell.style.color = 'grey';
           emptyRow.appendChild(emptyCell);
           transacList.appendChild(emptyRow);
         };
   
-        // Filtrer les transactions selon le filtre choisi
+        /* Filtrer les transactions selon le filtre choisi
         const filteredTransactions = filterTransactions(transactions, filter);
-        console.log("Transactions filtrées :", filteredTransactions);  // Log des transactions après filtrage
+        console.log("Transactions filtrées :", filteredTransactions); Log des transactions après filtrage  */
   
-        if (filteredTransactions.length === 0) {
+        if (transactions.length === 0) {
           displayEmptyMessage();
         } else {
           transacList.innerHTML = ''; // Effacer les anciennes lignes
-          filteredTransactions.forEach((transaction, index) => {
+          transactions.forEach((transaction, index) => {
             let row = document.createElement("tr");
   
             // Catégorie
@@ -154,6 +153,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                     saveBtn.remove();
                     cancelBtn.remove();
                     fetchTransactions();
+
+                    //Log pour sauvegarde
+                    console.log("Transaction modifiée avec succès: ", updatedTransaction);
                   })
                   .catch(error => alert(error.message));
                 }
@@ -204,7 +206,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             deleteBtn.addEventListener("click", () => {
               if (confirm("Êtes-vous sûr de vouloir supprimer cette transaction ?")) {
                 fetch(`/transactions/${transaction._id}`, { method: 'DELETE' })
-                  .then(() => { row.remove(); });  // Retirer la ligne du tableau
+                  .then(() => { 
+                    row.remove(); });  // Retirer la ligne du tableau
+
+                    //Log post suppression
+                    console.log("Transaction supprimée avec succès: ", transaction._id);
               }
             });
             actionCell.appendChild(deleteBtn);
@@ -225,7 +231,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       fetchTransactions(selectedFilter);  // Filtrer selon la sélection de l'utilisateur
     });
   
-    // Appel initial pour récupérer les transactions sans filtre
-    fetchTransactions('last7days');
+    // Appel initial pour récupérer les transactions
+    fetchTransactions('currentMonth');
   });
   

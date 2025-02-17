@@ -507,6 +507,12 @@
     background-color: var(--button-hover-color);
   }
   
+  .cell-vide {
+    text-align: center;
+    font-weight: bold;
+    color: grey;
+  }
+
   .title-sw-white {
     color: var(--primary-color);
     background-color: white;

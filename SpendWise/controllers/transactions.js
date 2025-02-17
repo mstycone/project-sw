@@ -1,6 +1,10 @@
 import Transaction from '../models/transactions.js'; 
 import Categorie from '../models/categories.js';
 import asyncHandler from 'express-async-handler'; //gestion auto des exceptions/erreurs 
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc.js'; //Import extension officielle
+
+dayjs.extend(utc);
 
 //Récuperer les transactions 
 const getAllTransactions = asyncHandler(async (req, res) => {
@@ -31,7 +35,9 @@ const getLastTransactions = asyncHandler(async (req, res) => {
     //Formatage pour renvoyer `categorie` en tant que texte et non objet
     const formattedTransactions = transactions.map(transaction => ({
         ...transaction.toObject(),
-        categorie: transaction.categorie.name 
+        categorie: transaction.categorie.name //categorie stocké sous form ID(ObjectId)
+        //populate nécessaire sinon transaction.categorie.name est undefined 
+        
     }));
 
     console.log('Transactions avant formatage:', transactions);
@@ -39,6 +45,51 @@ const getLastTransactions = asyncHandler(async (req, res) => {
     
     res.json(formattedTransactions);
 });
+
+//Filtrer les transactions par periode
+const getFilteredTransactions = asyncHandler(async (req, res) => {
+
+    let {filter} = req.query; //récup filtre req GET
+    let today = dayjs().utc();//use UTC pour today date 
+    let startDate, endDate;
+
+    switch (filter) {
+
+        case 'last7days':
+            startDate = today.subtract(7, 'days').startOf('day');
+            break;
+
+        case 'last30days':
+            startDate = today.subtract(30, 'days').startOf('day');
+            break;
+
+        case 'currentMonth':
+            startDate = today.startOf('month');
+          break;
+
+        case 'currentYear':
+            startDate = today.startOf('year');
+          break;
+
+        default:
+          startDate = null; //no filtre
+    }
+
+    //Build filtre requête mongodb
+    let query = startDate ? { date: { $gte: startDate.toDate()}} : {};
+
+    const transactions = await Transaction
+        .find(query)
+        .populate('categorie', 'name') // Peupler le nom de la catégorie
+        .sort({date: -1});
+
+    const formattedTransactions = transactions.map(transaction => ({
+        ...transaction.toObject(),
+        categorie: transaction.categorie.name
+    }));
+
+    res.status(200).json(formattedTransactions);
+})
 
 //Ajout d'une nouvelle transaction 
 const addTransaction = asyncHandler(async (req, res) => {
@@ -115,6 +166,7 @@ const updateTransaction = asyncHandler(async (req, res) => {
     res.json(updatedTransaction);
 });
 
+//Récupérer les catégories
 const getAllCategories = asyncHandler(async (req, res) => {
     const categories = await Categorie.find()
     .sort({ name: 1 });//organiser par nom croissant
@@ -128,6 +180,7 @@ const getAllCategories = asyncHandler(async (req, res) => {
     res.status(200).json(categories);
 });
 
+//Récupérer les principales catégories selon dépense total
 const getTopCategories = asyncHandler(async (req, res) => {
 
     console.log("Récupération des top catégories...");
@@ -182,6 +235,7 @@ const getTopCategories = asyncHandler(async (req, res) => {
 const transactionController = {
     getAllTransactions,
     getLastTransactions,
+    getFilteredTransactions,
     addTransaction,
     deleteTransaction,
     updateTransaction,

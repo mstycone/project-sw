@@ -8,6 +8,9 @@ router.get('/', transactionController.getAllTransactions);
 // Récupérer les 5 dernières transactions
 router.get('/last-5', transactionController.getLastTransactions);
 
+//Récupérer transactions filtrées selon période
+router.get('/filter-transac', transactionController.getFilteredTransactions);
+
 //Ajouter une nouvelle transaction 
 router.post('/', transactionController.addTransaction);
 
