@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style-sw/style.css" type="text/css">
+  <link rel="stylesheet" href="./style-sw/mediaqueries.css" type="text/css">
   <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
-  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
   <script src="./js/accueil-script.js" defer></script>
   <script src="./js/add-transac-script.js" defer></script>
   <script src="./js/add-category-script.js" defer></script>
@@ -18,7 +18,7 @@
     <h1>SPEND<span class="title-sw-white">WISE</span></h1>
     <nav>
       <a href="accueil.html" class="active">Accueil</a>
-      <a href="transac.html">Voir les transactions</a>
+      <a href="transac.html">Historique</a>
       <a href="visualisation.html">Visualisation</a>
     </nav>
     <a href="index.html" class="button-exit">Quitter</a> 
@@ -61,34 +61,35 @@
 
     <section class="add-transac">
       <form id="transac-form">
+        <h2>Ajouter une transaction</h2>
         <div class="form-group">
-          <label for="type">Type :</label>
+          <label for="type">Type</label>
           <select id="type" name="type" required>
-            <option value="" disabled selected>--Choisir le type de transaction--</option>
+            <option value="" disabled selected>-- Choisir le type transaction --</option>
             <option value="revenu">Revenu</option>
             <option value="dépense">Dépense</option>
           </select>
         </div>
   
         <div class="categorie-group">
-          <label for="categorie">Catégorie :</label>
+          <label for="categorie">Catégorie </label>
           <select id="categorie" name="categorie" required>
             <option value="" disabled selected>-- Choisir la catégorie --</option>
             <!--Ajout dynamique des options de catégorie ici-->
           </select>
           <button type="button" id="add-category">+</button>
         </div>
-  
+        
         <div class="form-group">
-          <label for="description">Description :</label>
+          <label for="description">Description </label>
           <input type="text" id="description" name="description" placeholder="Exemple : Chocolat" required>
         </div>
-  
+        
         <div  class="form-group">
-          <label for="montant">Montant :</label>
+          <label for="montant">Montant </label>
           <input type="number" min="0" id="montant" step="0.01" name="montant" placeholder="0.00" required>
         </div>
-  
+        
         <button id="submit" type="submit">Ajouter la transaction</button>
       </form>
       <!-- Message de confirmation -->
@@ -147,9 +148,11 @@
     <!-- Latest compiled and minified JavaScript 
    plugin utc dayjs -->
    <script src="https://unpkg.com/dayjs"></script>
-   <script src="https://unpkg.com/dayjs-plugin-utc"></script>
+   <script src="https://unpkg.com/dayjs/plugin/utc.js"></script>
+   <script src="https://unpkg.com/dayjs/plugin/timezone.js"></script>
    <script>
-     dayjs.extend(dayjsPluginUTC.default)
+     dayjs.extend(dayjs_plugin_utc);
+     dayjs.extend(dayjs_plugin_timezone);
    </script> 
 </body>
 </html>

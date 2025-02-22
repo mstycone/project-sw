@@ -57,8 +57,20 @@
     /*élément dessous complémentaire avec position*/
     z-index: 9999; /*Place élément tout haut pile*/
     top: 57.5px;
-    right: 30px;
+    right: 50px;
+    cursor: pointer;
+    transition: all var(--transition-duration) var(--transition-timing-function);
   }  
+
+  #themeToggle:hover {
+    border-color: var(--primary-color);
+  }
+
+  #themeToggle:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 50px rgba(62, 180, 137, 0.5);
+  }
 
   #themeToggle svg {
     fill: var(--primary-color);
@@ -85,14 +97,16 @@
     background-color: var(--background-color);
     color: var(--text-color);
     line-height: 1.6;
+    overflow-x: auto;
   }
 
   header {
     position: relative;
+    min-width: 100%;
+    width: max-content; /*Éviter coupure lors modif d'une transaction*/
     background-color: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     padding: 10px;
     text-align: center;
-    width: 100%; /*Éviter coupure lors modif d'une transaction*/
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-bottom: 2px solid var(--primary-color);
   }
@@ -127,6 +141,7 @@
   
   nav a {
     margin: 0 15px;
+    font-size: 1rem;
     color: var(--primary-color);
     text-decoration: none;
     font-weight: bold;
@@ -252,16 +267,23 @@
     width: calc(100% - 85px);
     margin: auto;
     background-color: var(--background-color2);
-    padding: 30px 30px 10px 30px; 
+    padding: 15px 30px 10px 30px; 
     border-radius: var(--border-radius);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+
+  form h2 {
+    margin-top: 0;
+  }
   
   .form-group, .categorie-group {
-    display: flex; 
-    align-items: center; 
-    margin-bottom: 10px; 
+    display: flex;
+    margin-bottom: 10px;
     background-color: var(--background-color2);
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 85%;
+    margin: 5px auto;
   }
   
   .categorie-group {
@@ -274,8 +296,8 @@
 
   #add-category {
     position: absolute;
-    top: 7.5px;
-    right: -26px;
+    top: 6px;
+    right: -35px;
     background-color:var(--primary-color); 
     color: white; 
     border: none; 
@@ -304,7 +326,7 @@
   
   input, select {
     flex: 2; 
-    padding: 12px;
+    padding: 10px;
     border: 0.5px solid #ddd;
     border-radius: var(--border-radius);
     font-size: 1em;
@@ -321,12 +343,12 @@
   
   #submit {
     padding: 12px;
-    margin: 20px;
+    margin: 25px auto 5px auto;
     background-color: var(--primary-color);
     color: white;
     border-radius: 5px;
     /*Résolution problème de débordement bouton vers bordure droite du formulaire */
-    width: calc(100% - 40px);/*Ajustemt largeur comptant margin */
+    width: calc(100% - 40%);/*Ajustemt largeur comptant margin */
   }
   
   #see-transac {
@@ -405,6 +427,39 @@
     color: #DC3545;
   }  
 
+.periodfilter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background-color);
+  padding: 0.5px;
+  width: fit-content;
+  margin: auto;
+}
+
+.periodfilter select {
+  padding: 8px;
+  border: 1px solid 'lightsmoke';
+  border-radius: var(--border-radius);
+  font-size: 0.75em;
+  background-color: var(--background-color2);
+  color: var(--text-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all var(--transition-duration) var(--transition-timing-function);
+}
+
+.periodfilter select:hover {
+  border-color: var(--primary-color);
+}
+
+.periodfilter select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 5px rgba(62, 180, 137, 0.5);
+}
+
+
   button.commencer{
     padding: 12px 20px;
     border-radius: 40px;
@@ -422,7 +477,7 @@
   .conteneur-graph {
     display: flex; 
     justify-content: space-around; 
-    margin-top: 20px; 
+    margin-top: 0.01px; 
   }
   
   .graph {
@@ -437,69 +492,74 @@
     color: var(--text-color);
   }
   
-  /* Media query pour écrans plus étroits */
-  @media (max-width: 768px) {
-    .conteneur-graph{
-      flex-direction: column; 
-      align-items: center;
-    }
-    .graph {
-      max-width: 100%; 
-      margin: 10px 0; 
-    }
-  
-    form {
-      max-width: 100%;
-    }
-  
-    button.commencer {
-      width: auto;
-      margin: 10px auto;
-    }
-  
-    #submit {
-      padding: 12px 10px;
-    }
-  }
-  
   footer {
-    margin: 50px 50px 20px 50px;
+    margin: 40px 50px 20px 50px;
     padding: 20px;
     color: var(--secondary-color);
     text-align: center;
   }
   
   table {
-    width: 100%;
-    border: 1px solid #ddd;
+    //width: 70%; 
+    min-width: 70px; /* Largeur minimale */
+    max-width: 80vw; /* Largeur maximale en fonction de l'écran */  
+    /*table-layout: fixed; Fixe largeur des colonnes*/
     border-collapse: collapse;
-    margin: 20px 0px;
+    margin: 20px auto; /*auto pour centrer*/ 
     text-align: center;
   }
   
   th, td {
+    width: 20%; /*Ajuste selon nbr column*/
+    overflow: hidden; /*Empêche débordement texte*/
+    /*text-overflow: ellipsis; Coupe text trop long*/
+    /*white-space: nowrap; evite retour ligne*/
     border: 1px solid #ddd;
     text-align: center;
-  }
-    
-  th, td {
     padding: 10px;
-    text-align: center;
+    background-color: var(--background-color2);
+    transition: background-color var(--transition-duration) var(--transition-timing-function);
   }
-    
+  
   th {
-    background-color:var(--background-color);
-    text-align: center;
+    font-size: 0.45rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--secondary-color);
+    background-color: var(--dl-background-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding: 14px;
   }
+  
+  td {
+    font-size: 0.5rem;
+    color: var(--text-color);
+  }
+  
+  td input, td select {
+    width: 90%;
+    box-sizing: border-box; /*ø dépassement cell*/
+  }
+
+  tr:nth-child(even) td {
+    background-color: var(--dl-background-color);
+  }
+  
+  tr:hover td {
+    background-color: rgba(62, 180, 137, 0.2);
+    transition: background-color var(--transition-duration) var(--transition-timing-function);
+  }
+  
 
   .button-add-transac {
     padding: 10px;
     background-color: var(--background-color2);
     color: var(--primary-color);
     border: none;
+    text-align: center;
     border-radius: 4px;
-    width: calc(100% - 20px); /* Adjust width to account for margin */
-    margin-right: 20px; /* Increase margin to the right */
+    width: 90%; /* Adjust width to account for margin */
+    margin: 0 5px; /* Increase margin to the right */
   }
   
   .button-add-transac:hover {

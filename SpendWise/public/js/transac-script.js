@@ -1,3 +1,5 @@
+//alert("Coucou");
+
 document.addEventListener("DOMContentLoaded", async () => {
     const filterSelect = document.getElementById("periodfilter");
 
@@ -32,7 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const fetchTransactions = async (filter) => {
       console.log("Récupération des transactions avec le filtre :", filter);
       try {
-        const response = await fetch('/transactions/filter-transac?filter=${filter}'); 
+        const response = await fetch(`/transactions/filter-transac?filter=${filter}`); //Interpolation chaine avec ${filter}
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -68,6 +70,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           transactions.forEach((transaction, index) => {
             let row = document.createElement("tr");
   
+            //Récupération données 
+
+            /*Gestion affichage*/
+            
             // Catégorie
             let catCell = document.createElement("td");
             catCell.textContent = transaction.categorie;
@@ -80,7 +86,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   
             // Montant
             let montantCell = document.createElement("td");
-            montantCell.textContent = transaction.montant.toFixed(2) + " €";
+            montantCell.textContent = parseFloat(transaction.montant.toFixed(2)) + " €";
             row.appendChild(montantCell);
   
             // Type
@@ -90,9 +96,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   
             // Date
             let dateCell = document.createElement("td");
-            dateCell.textContent = dayjs(transaction.date).format('DD/MM/YYYY');
+            dateCell.textContent = dayjs(transaction.date).local().format('DD/MM/YYYY');
             row.appendChild(dateCell);
   
+            /*Gestion des transactions*/
+
             // Boutons modifier et supprimer
             let actionCell = document.createElement("td");
   
@@ -125,9 +133,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                     description: document.getElementById(`edit-description-${index}`).value,
                     montant: parseFloat(document.getElementById(`edit-montant-${index}`).value),
                     type: document.getElementById(`edit-type-${index}`).value,
-                    date: dayjs(document.getElementById(`edit-date-${index}`).value).format('DD/MM/YYYY'),
+                    date: dayjs(document.getElementById(`edit-date-${index}`).value).local().format(), 
                   };
   
+                  alert("date saved : " + updatedTransaction.date);
                   // Envoi de la requête PUT pour modifier les transactions
                   fetch(`/transactions/${transaction._id}`, {
                     method: 'PUT',
@@ -144,9 +153,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                     // Mettre à jour l'affichage de la transaction
                     catCell.textContent = updatedTransaction.categorie;
                     descCell.textContent = updatedTransaction.description;
-                    montantCell.textContent = updatedTransaction.montant.toFixed(2) + " €";
+                    montantCell.textContent = parseFloat(updatedTransaction.montant.toFixed(2)) + " €";
                     typeCell.textContent = updatedTransaction.type;
-                    dateCell.textContent = dayjs(updatedTransaction.date).format('DD/MM/YYYY');
+                    dateCell.textContent = dayjs(updatedTransaction.date).local().format('DD/MM/YYYY');
   
                     // Réafficher le bouton Modifier et cacher le bouton Sauvegarder
                     editBtn.style.display = "inline";

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style-sw/style.css" type="text/css">
-  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+  <link rel="stylesheet" href="./style-sw/mediaqueries.css" type="text/css">
   <script src="./js/visual-script.js" defer></script>
   <script src="./js/theme-script.js" defer></script>
   <title>SpendWise - Visualisation</title>
@@ -15,7 +15,7 @@
     <h1>SPEND<span class="title-sw-white">WISE</span></h1>
     <nav>
       <a href="accueil.html">Accueil</a>
-      <a href="transac.html">Voir les transactions</a>
+      <a href="transac.html">Historique</a>
       <a href="visualisation.html" class="active">Visualisation</a>
     </nav>
     <a href="index.html" class="button-exit">Quitter</a>
@@ -60,9 +60,11 @@
       <!-- Latest compiled and minified JavaScript 
    plugin utc dayjs -->
    <script src="https://unpkg.com/dayjs"></script>
-   <script src="https://unpkg.com/dayjs-plugin-utc"></script>
+   <script src="https://unpkg.com/dayjs/plugin/utc.js"></script>
+   <script src="https://unpkg.com/dayjs/plugin/timezone.js"></script>
    <script>
-     dayjs.extend(dayjsPluginUTC.default)
+     dayjs.extend(dayjs_plugin_utc);
+     dayjs.extend(dayjs_plugin_timezone);
    </script> 
 </body>
 </body>

@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     let transactionChart, expenseChart; // Stocker les graphiques pour éviter les doublons
 
     // Fonction de filtrage des transactions
+    /*
     const filterTransactions = (transactions, filter  = 'currentMonth') => {
       const today = dayjs().utc();//use UTC pour today date 
       console.log("Filtrage avec le filtre :", filter);  // Log du filtre utilisé
@@ -30,12 +31,13 @@ document.addEventListener("DOMContentLoaded", async function () {
           return transactions;
       }
     };
+    */
 
     
-    const fetchCategories = async () => {
-        console.log("Récupération du top5 catégories et autres ...");
+    const fetchCategories = async (filter) => {
+        console.log("Récupération du top5 catégories et autres avec filtre: ", filter);
         try {
-            const response = await fetch('/categories/top5');
+            const response = await fetch(`/categories/top5?filter=${filter}`);
             if (!response.ok) {
                 throw new Error('Erreur lors de la récupération des transactions');
             }
@@ -54,29 +56,31 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     const fetchTransactions = async (filter) => {
-        console.log("Récupération des transactions...");
+        console.log("Récupération des transactions avec le filtre: ", filter);
         try {
 
             // Exécuter les requêtes en parallèle
             const [transactionsResponse, topCategories] = await Promise.all([
-                fetch('/transactions'),
-                fetchCategories()
+                fetch(`/transactions/filter-transac?filter=${filter}`),
+                fetchCategories(filter) //Ajout filtre 
             ]);
+
             if (!transactionsResponse.ok) {
                 throw new Error('Erreur lors de la récupération des transactions');
             }
             const transactions = await transactionsResponse.json();
 
-            // Filtrer les transactions selon le filtre choisi
-            const filteredTransactions = filterTransactions(transactions, filter);
-            console.log("Transactions filtrées :", filteredTransactions);
+            /* Filtrer les transactions selon le filtre choisi
+            const transactions = filterTransactions(transactions, filter);
+            console.log("Transactions filtrées :", transactions);
+            */
 
             // Initialiser les variables pour les dépenses et revenus
             let depenseTotal = 0;
             let revenueTotal = 0;
 
             // Parcourir les transactions pour calculer les totaux
-            filteredTransactions.forEach((transaction) => {
+            transactions.forEach((transaction) => {
                 if (transaction.type === "dépense") {
                     depenseTotal += parseFloat(transaction.montant);
                    // if (categories[transaction.categorie]) {
@@ -123,11 +127,20 @@ document.addEventListener("DOMContentLoaded", async function () {
                         legend: {
                             display: true,
                             position: 'top',
+                            labels: {
+                                font:{
+                                    size: 15,
+                                },
+                            }
                         },
                         title: {
                             display: true,
                             text: 'Visualisation des revenus et dépenses',
-                            color: '#ff5722'
+                            color: '#ff5722',
+                            font:{
+                                size: 18,
+                                weight: 'bold'
+                            }
                         }
                     }
                 }
@@ -169,12 +182,21 @@ document.addEventListener("DOMContentLoaded", async function () {
                     plugins: {
                         legend: {
                             display: true,
-                            position: 'top'
+                            position: 'top',
+                            labels: {
+                                font:{
+                                    size: 15,
+                                },
+                            }
                         },
                         title: {
                             display: true,
                             text: 'Visualisation des dépenses majeurs ',
-                            color: '#ff5722'
+                            color: '#ff5722',
+                            font:{
+                                size: 18,
+                                weight: 'bold'
+                            },
                         }
                     }
                 }
@@ -185,11 +207,12 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     };
 
-    // Appliquer le filtrage au changement du select
-    filterSelect.addEventListener("change", () => {
-        fetchTransactions(filterSelect.value || 'currentMonth');
+    //Récupérer les transactions dès que l'utilisateur sélectionne un filtre
+    filterSelect.addEventListener("change", (e) => {
+        const selectedFilter = e.target.value;
+        fetchTransactions(selectedFilter);// Filtrer selon la sélection de l'utilisateur
     });
 
     //Charger les transactions au démarrage 
-    fetchTransactions(filterSelect.value || 'currentMonth');
+    fetchTransactions('currentMonth');
 });

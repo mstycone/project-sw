@@ -180,14 +180,45 @@ const getAllCategories = asyncHandler(async (req, res) => {
     res.status(200).json(categories);
 });
 
-//Récupérer les principales catégories selon dépense total
+//Récupérer les principales catégories selon dépense total + filtre periode
 const getTopCategories = asyncHandler(async (req, res) => {
 
+    let {filter} = req.query; //récup filtre req GET
+    let today = dayjs().utc();//use UTC pour today date 
+    let startDate, endDate;
+
+    switch (filter) {
+
+        case 'last7days':
+            startDate = today.subtract(7, 'days').startOf('day');
+            break;
+
+        case 'last30days':
+            startDate = today.subtract(30, 'days').startOf('day');
+            break;
+
+        case 'currentMonth':
+            startDate = today.startOf('month');
+          break;
+
+        case 'currentYear':
+            startDate = today.startOf('year');
+          break;
+
+        default:
+          startDate = null; //no filtre
+    }
+
+    //Build filtre requête mongodb
+    let query = { type: 'dépense' }; //filtre dépenses 
+    if (startDate) { 
+        query.date = { $gte: startDate.toDate()}; // Filtrer transactions par date
+    }
     console.log("Récupération des top catégories...");
     
     //Récup' catégories trier par montant 
     const allCategories = await Transaction.aggregate([
-        { $match: { type: 'dépense' } }, //filtre dépense only
+        { $match: query}, //filtre dépense only
         { $group: { //regrouper par catégorie
             _id: '$categorie',
             total: { $sum: '$montant' } } 
