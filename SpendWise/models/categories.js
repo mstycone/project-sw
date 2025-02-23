@@ -12,7 +12,7 @@ const CategorieSchema = new Schema ({
     type: {
         type: String,
         required: true,
-        enum: ['Revenu', 'Dépense', 'revenu', 'dépense']
+        enum: ['revenu', 'dépense']
     }
 });
 

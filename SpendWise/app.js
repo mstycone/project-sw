@@ -29,6 +29,31 @@ app.use(express.json()); //parser le json
 app.use(express.urlencoded({ extended: false}));
 app.use(cookieParser());
 
+
+
+//Ajout des routes 
+//Routes statiques pour le front-end avec path 
+app.use(express.static(path.join(__dirname, 'public'))); 
+
+//Import des routes back
+app.use('/transactions', transacRoutes);
+app.use('/categories', catRoutes);
+
+//Middelware gestion des erreurs globale
+app.use((err, req, res, next) => {
+    const errorStatus = err.status || 500;
+    const errorMessage = err.message || 'Une erreur est survenue';
+    //Ne montrer la stack trace qu'en mode dev
+    const stackTrace = req.app.get('env') === 'development' ? err.stack : undefined;
+    
+    return res.status(errorStatus).json({
+        success: false,
+        message: errorMessage,
+        status: errorStatus,
+        stack: stackTrace
+    });
+});
+
 //Connection en dev mod
 /*
 const mongodb = "mongodb://localhost/spendwise-db";
@@ -68,30 +93,6 @@ async function main() {
     }
 }
 main();
-
-
-//Ajout des routes 
-//Routes statiques pour le front-end avec path 
-app.use(express.static(path.join(__dirname, 'public'))); 
-
-//Import des routes back
-app.use('/transactions', transacRoutes);
-app.use('/categories', catRoutes);
-
-//Middelware gestion des erreurs globale
-app.use((err, req, res, next) => {
-    const errorStatus = err.status || 500;
-    const errorMessage = err.message || 'Une erreur est survenue';
-    //Ne montrer la stack trace qu'en mode dev
-    const stackTrace = req.app.get('env') === 'development' ? err.stack : undefined;
-
-    return res.status(errorStatus).json({
-        success: false,
-        message: errorMessage,
-        status: errorStatus,
-        stack: stackTrace
-    });
-});
 
 // Lancer le serveur en mode dev 
 /*
