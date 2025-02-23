@@ -3,13 +3,14 @@
 @media screen and (max-width: 600px) { 
     
     .conteneur-graph{
-      flex-direction: column; 
-      align-items: center;
+        flex-direction: column; 
+        align-items: center;
     }
-
+      
     .graph {
-      max-width: 100%; 
-      margin: 10px 0; 
+        max-width: 100%; 
+        margin: 10px 0; 
+        font-size: 50px;
     }
   
     
@@ -144,6 +145,18 @@
 
 /*Grand téléphone er petites Tablette*/ 
 @media screen and (min-width: 601px) and (max-width: 800px) {
+
+    .conteneur-graph{
+        flex-direction: column; 
+        align-items: center;
+    }
+      
+    .graph {
+        max-width: 100%; 
+        margin: 10px 0; 
+        font-size: 50px;
+    }
+    
     nav a, h4 {
         font-size: 1.3rem;
     }
@@ -343,17 +356,6 @@
 }
 
 @media screen and (min-width: 1025px) {
-
-    .conteneur-graph{
-        flex-direction: column; 
-        align-items: center;
-    }
-      
-    .graph {
-        max-width: 100%; 
-        margin: 10px 0; 
-        font-size: 50px;
-    }
     
     nav {
         gap: 75px;

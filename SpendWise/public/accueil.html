@@ -68,7 +68,7 @@
 
     <section class="add-transac">
       <form id="transac-form">
-        <h2>Ajouter une transaction</h2>
+        <h2>Nouvelle transaction</h2>
         <div class="form-group">
           <label for="type">Type</label>
           <select id="type" name="type" required>
@@ -100,7 +100,7 @@
         <button id="submit" type="submit">Ajouter la transaction</button>
       </form>
       <!-- Message de confirmation -->
-      <p id="feedback">Transaction ajoutée avec succès !</p>
+      <p id="feedback" aria-live="polite" role="status">Transaction ajoutée avec succès !</p>
     </section>
 
     <section class="last-transactions">
