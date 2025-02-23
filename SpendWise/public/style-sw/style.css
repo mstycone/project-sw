@@ -88,6 +88,24 @@
     display: block; /*occupe toute largeur 
     et pousse élément non affiché (none) en dessous*/
   }
+
+  #account-balance svg {
+    fill: var(--primary-color);
+    height: 20px; 
+    width: 25px;
+  }
+
+  #finance-mode svg {
+    fill: var(--primary-color);
+    height: 25px; 
+    width: 25px;
+  }
+
+  #finance svg {
+    fill: var(--primary-color);
+    height: 25px; 
+    width: 25px;
+  }
   
   body {
     font-family: var(--font-family);

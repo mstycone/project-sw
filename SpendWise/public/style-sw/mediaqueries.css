@@ -61,11 +61,34 @@
         font-size: 1rem;
     }
 
+    #solde h2 {
+        margin-bottom: 0;
+    }
+
+    #resume-transaction h2 {
+        margin-bottom: 0;
+    }
+
     #themeToggle {
         height: 20px; 
         width: 20px;
         right: 20px;
     }
+
+    #account-balance svg {
+        height: 20px; 
+        width: 20px;
+      }
+    
+      #finance-mode svg {
+        height: 25px; 
+        width: 20px;
+      }
+    
+      #finance svg {
+        height: 25px; 
+        width: 30px;
+      }
 
     .button-exit {
         top: 18%;
