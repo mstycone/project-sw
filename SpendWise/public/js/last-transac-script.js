@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-        const response = await fetch('/transactions/last-5');
+        const response = await fetch('/transactions?limit=5');
         if (!response.ok) throw new Error('Erreur lors de la récupération des last 5 transactions');
 
         const transactions = await response.json();

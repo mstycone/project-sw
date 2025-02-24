@@ -2,14 +2,8 @@ import express from 'express';
 const router = express.Router(); 
 import transactionController from '../controllers/transactions.js';
 
-//Récuperer toutes les transactions 
-router.get('/', transactionController.getAllTransactions);
-
-// Récupérer les 5 dernières transactions
-router.get('/last-5', transactionController.getLastTransactions);
-
-//Récupérer transactions filtrées selon période
-router.get('/filter-transac', transactionController.getFilteredTransactions);
+//Récuperer les transactions 
+router.get('/', transactionController.getTransactions);
 
 //Ajouter une nouvelle transaction 
 router.post('/', transactionController.addTransaction);

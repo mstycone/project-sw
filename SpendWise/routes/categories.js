@@ -3,10 +3,7 @@ const router = express.Router();
 import transactionController from '../controllers/transactions.js';
 
 //Route pour récupérer toutes les catégories 
-router.get('/', transactionController.getAllCategories)
-
-//Route pour récupérer les top 5 catégories 
-router.get('/top5', transactionController.getTopCategories)
+router.get('/', transactionController.getCategories)
 
 //Middleware de gestions des erreurs 
 router.use((err, req, res, next) => {

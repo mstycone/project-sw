@@ -3,41 +3,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     const filterSelect = document.getElementById("periodfilter");
   
     let transactionChart, expenseChart; // Stocker les graphiques pour éviter les doublons
-
-    // Fonction de filtrage des transactions
-    /*
-    const filterTransactions = (transactions, filter  = 'currentMonth') => {
-      const today = dayjs().utc();//use UTC pour today date 
-      console.log("Filtrage avec le filtre :", filter);  // Log du filtre utilisé
-
-      switch (filter) {
-        case 'last7days':
-          return transactions.filter(transaction =>
-            dayjs(transaction.date).utc().isAfter(today.subtract(7, 'days')) //Compare en UTC
-          );
-        case 'last30days':
-          return transactions.filter(transaction =>
-            dayjs(transaction.date).utc().isAfter(today.subtract(30, 'days'))
-          );
-        case 'currentMonth':
-          return transactions.filter(transaction =>
-            dayjs(transaction.date).utc().isSame(today, 'month')
-          );
-        case 'currentYear':
-          return transactions.filter(transaction =>
-            dayjs(transaction.date).utc().isSame(today, 'year')
-          );
-        default:
-          return transactions;
-      }
-    };
-    */
-
     
-    const fetchCategories = async (filter) => {
-        console.log("Récupération du top5 catégories et autres avec filtre: ", filter);
+    const fetchCategories = async (top) => {
+        console.log("Récupération du top5 catégories et autres avec filtre: ", top);
         try {
-            const response = await fetch(`/categories/top5?filter=${filter}`);
+            const response = await fetch(`/categories?top=true`);
             if (!response.ok) {
                 throw new Error('Erreur lors de la récupération des transactions');
             }
@@ -61,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             // Exécuter les requêtes en parallèle
             const [transactionsResponse, topCategories] = await Promise.all([
-                fetch(`/transactions/filter-transac?filter=${filter}`),
+                fetch(`/transactions?filter=${filter}`),
                 fetchCategories(filter) //Ajout filtre 
             ]);
 
@@ -69,11 +39,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 throw new Error('Erreur lors de la récupération des transactions');
             }
             const transactions = await transactionsResponse.json();
-
-            /* Filtrer les transactions selon le filtre choisi
-            const transactions = filterTransactions(transactions, filter);
-            console.log("Transactions filtrées :", transactions);
-            */
 
             // Initialiser les variables pour les dépenses et revenus
             let depenseTotal = 0;

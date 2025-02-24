@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 import Categorie from './models/categories.js';
+//import dotenv from 'dotenv';
+
+//dotenv.config(); 
 
 const initializeCategories = async () => {
     const existingCategories = await Categorie.find();

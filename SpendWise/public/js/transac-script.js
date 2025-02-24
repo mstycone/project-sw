@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const fetchTransactions = async (filter) => {
       console.log("Récupération des transactions avec le filtre :", filter);
       try {
-        const response = await fetch(`/transactions/filter-transac?filter=${filter}`); //Interpolation chaine avec ${filter}
+        const response = await fetch(`/transactions?filter=${filter}`); //Interpolation chaine avec ${filter}
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -58,10 +58,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           emptyRow.appendChild(emptyCell);
           transacList.appendChild(emptyRow);
         };
-  
-        /* Filtrer les transactions selon le filtre choisi
-        const filteredTransactions = filterTransactions(transactions, filter);
-        console.log("Transactions filtrées :", filteredTransactions); Log des transactions après filtrage  */
   
         if (transactions.length === 0) {
           displayEmptyMessage();
