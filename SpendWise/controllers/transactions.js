@@ -6,10 +6,17 @@ import utc from 'dayjs/plugin/utc.js'; //Import extension officielle
 
 dayjs.extend(utc);
 
+//Fonction formatage transactions (map categorie.name)
+const formatTransactions = (transactions) => { 
+    return transactions.map(transaction => ({
+    ...transaction.toObject(),
+    categorie: transaction.categorie.name
+}))};
+
 //Récuperer les transactions ...
 const getTransactions = asyncHandler(async (req, res) => {
 
-    let {filter, limit} = req.query; //récup filtre, limite req GET
+    let {filter, limit, page, all, latest } = req.query; //récup filtre, limite req GET
     let today = dayjs().utc();//use UTC pour today date 
     let startDate;
 
@@ -39,26 +46,54 @@ const getTransactions = asyncHandler(async (req, res) => {
     //Build filtre requête mongodb
     let query = startDate ? { date: { $gte: startDate.toDate()}} : {};
 
+    if (latest === 'true') {
+        const latestTransactions = await Transaction.find(query)
+            .populate('categorie', 'name')
+            .sort({ date: -1 }) // Trier par date décroissante
+            .limit(5);
+
+        const formattedLatestTransactions = formatTransactions(latestTransactions);
+
+        return res.status(200).json({ transactions: formattedLatestTransactions});
+    }
+
+    //Condition param all 
+    if (all === 'true'){
+        limit = null;
+        page = null;
+    }
+
+    limit = parseInt(limit) || 10; //valeur par défaut 
+    page = parseInt(page) || 1; //valeur par défaut 
+
     // Convertir `limit` en entier (et s'assurer qu'il est positif)
     let transactionsQuery = Transaction.find(query)
         .populate('categorie', 'name')
         .sort({ date: -1 });
 
-    if (limit) { //Pour récupérer last 5 transactions 
+    if (!all) { //Appliquer la pagination si `all` n'est pas activé
         transactionsQuery = transactionsQuery
-            .limit(parseInt(limit, 10)); //En base 10 
+            .skip((page - 1) * limit)
+            .limit(limit);
     }
+
+    //Récupérer le total des transactions (utile pour la pagination)
+    const totalTransactions = await Transaction.countDocuments(query);
 
     const transactions = await transactionsQuery;
 
-    const formattedTransactions = transactions.map(transaction => ({
-        ...transaction.toObject(),
-        categorie: transaction.categorie.name
-    }));
+    const formattedTransactions = formatTransactions(transactions);
+
     console.log('Transactions avant formatage:', transactions);
     console.log('Transactions formatées:', formattedTransactions);
 
-    res.status(200).json(formattedTransactions);
+    res.status(200).json({
+        transactions: formattedTransactions,
+        currentPage: page,
+        totalPages: limit ? Math.ceil(totalTransactions / limit) : 1,
+        //totalPages: Math.ceil(totalTransactions / limit),
+        totalTransactions,
+    });
 });
 
 //Ajout d'une nouvelle transaction 
@@ -136,6 +171,7 @@ const updateTransaction = asyncHandler(async (req, res) => {
     res.json(updatedTransaction);
 });
 
+//Récupérer les catégories ... 
 const getCategories = asyncHandler(async (req, res) => {
     let { filter, top } = req.query; // Récupérer les paramètres de requête
     let today = dayjs().utc();
@@ -208,104 +244,6 @@ const getCategories = asyncHandler(async (req, res) => {
     console.log('Categories retrieved:', categories);
     res.status(200).json(categories);
 });
-
-/*
-//Récupérer les catégories
-const getAllCategories = asyncHandler(async (req, res) => {
-    const categories = await Categorie.find()
-    .sort({ name: 1 });//organiser par nom croissant
-
-    categories.sort((a,b) =>
-        (a.name.startsWith("Autre") ? 1 : 0) - (b.name.startsWith("Autre") ? 1 : 0) ||
-        a.name.localeCompare(b.name) // Garde ordre asc pour le reste
-    );
-    
-    console.log('Categories retrieved:', categories); // Log the retrieved categories
-    res.status(200).json(categories);
-});
-
-//Récupérer les principales catégories selon dépense total + filtre periode
-const getTopCategories = asyncHandler(async (req, res) => {
-
-    let {filter} = req.query; //récup filtre req GET
-    let today = dayjs().utc();//use UTC pour today date 
-    let startDate;
-
-    switch (filter) {
-
-        case 'last7days':
-            startDate = today.subtract(7, 'days').startOf('day');
-            break;
-
-        case 'last30days':
-            startDate = today.subtract(30, 'days').startOf('day');
-            break;
-
-        case 'currentMonth':
-            startDate = today.startOf('month');
-          break;
-
-        case 'currentYear':
-            startDate = today.startOf('year');
-          break;
-
-        default:
-          startDate = null; //no filtre
-    }
-
-    //Build filtre requête mongodb
-    let query = { type: 'dépense' }; //filtre dépenses 
-    if (startDate) { 
-        query.date = { $gte: startDate.toDate()}; // Filtrer transactions par date
-    }
-    console.log("Récupération des top catégories...");
-    
-    //Récup' catégories trier par montant 
-    const allCategories = await Transaction.aggregate([
-        { $match: query}, //filtre dépense only
-        { $group: { //regrouper par catégorie
-            _id: '$categorie',
-            total: { $sum: '$montant' } } 
-        }, 
-        { $sort: { total: -1}},
-        { $lookup: {
-            from: 'categories', //Collection
-            localField: '_id', //liaison id Transactions.categorie
-            foreignField: '_id', //id Categories
-            as: 'categorieInfo' //nom de la nouvelle propriété
-        }},
-        { $addFields: {
-            name: { $arrayElemAt: ["$categorieInfo.name", 0]} //Extrait nom catégorie
-        }},
-        { $project: { //garde name et total only 
-            _id: 0,
-            name: 1,
-            total: 1
-        }}
-        //{ $limit: 10} à voir par la suite
-    ]);
-
-    console.log("Catégories récupérées:", allCategories);
-
-    //Extrait top5 et addition des autres 
-    const top5 = allCategories.slice(0, 5);
-    console.log("Top 5 catégories:", top5);
-
-    const othersTotal = allCategories.slice(5)
-    .reduce((sum, cat) => sum += cat.total, 0);
-    console.log("Total autres catégories:", othersTotal);
-
-
-    //Ajout catégorie "Autres"
-    if (othersTotal > 0) {
-        top5.push({ total: othersTotal, name: "Autres" });
-    }
-
-   console.log("Top 5 catégories (et Autres) :", top5);
-
-    res.status(200).json(top5);  
-});
-*/
 
 //Regroupement toutes méthodes dans un objet  
 const transactionController = {

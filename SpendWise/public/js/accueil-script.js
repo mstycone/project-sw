@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", async function () {
   try {
-      const response = await fetch('/transactions'); // Récupérer les transactions
-      const transactions = await response.json();
+      const response = await fetch(`/transactions?all=true`); // Récupérer les transactions
+      const data = await response.json();
+      const transactions = data.transactions;
 
       const filterTransactions = (transactions) => {
         const today = dayjs().utc();//use UTC pour today date 

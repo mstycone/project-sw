@@ -182,6 +182,10 @@
         max-width: 90vw; /* Largeur maximale en fonction de l'écran */
     }
 
+    #pagination-container-top {
+        display: none;
+    }
+
     .conteneur-graph{
         flex-direction: column; 
         align-items: center;

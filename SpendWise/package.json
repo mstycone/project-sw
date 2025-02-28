@@ -10,6 +10,7 @@
     "http-errors": "^2.0.0",
     "mongoose": "^8.8.2",
     "morgan": "^1.10.0",
+    "paginationjs": "^2.6.0",
     "path": "^0.12.7"
   },
   "name": "spendwise",

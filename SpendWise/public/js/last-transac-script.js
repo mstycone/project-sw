@@ -7,10 +7,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-        const response = await fetch('/transactions?limit=5');
+        const response = await fetch('/transactions?latest=true');
         if (!response.ok) throw new Error('Erreur lors de la récupération des last 5 transactions');
 
-        const transactions = await response.json();
+        const data = await response.json();
+        const transactions = data.transactions;
         transactionsContainer.innerHTML = ''; // Efface le contenu précédent
 
         if (transactions.length === 0) {

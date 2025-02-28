@@ -4,10 +4,10 @@ document.addEventListener("DOMContentLoaded", async function () {
   
     let transactionChart, expenseChart; // Stocker les graphiques pour éviter les doublons
     
-    const fetchCategories = async (top) => {
-        console.log("Récupération du top5 catégories et autres avec filtre: ", top);
+    const fetchCategories = async (filter) => {
+        console.log("Récupération des top catégories avec filtre :", filter);
         try {
-            const response = await fetch(`/categories?top=true`);
+            const response = await fetch(`/categories?top=true&filter=${filter}`);
             if (!response.ok) {
                 throw new Error('Erreur lors de la récupération des transactions');
             }
@@ -31,14 +31,21 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             // Exécuter les requêtes en parallèle
             const [transactionsResponse, topCategories] = await Promise.all([
-                fetch(`/transactions?filter=${filter}`),
+                fetch(`/transactions?all=true&filter=${filter}`),
                 fetchCategories(filter) //Ajout filtre 
             ]);
 
             if (!transactionsResponse.ok) {
                 throw new Error('Erreur lors de la récupération des transactions');
             }
-            const transactions = await transactionsResponse.json();
+            const data = await transactionsResponse.json();
+            const transactions = data.transactions; //Accès à la propriété transactions 
+
+            //Vérification si transactions = tableau 
+            if (!Array.isArray(transactions)) {
+                console.error("transactions n'est pas un tableau :", transactions);
+                return;
+            }
 
             // Initialiser les variables pour les dépenses et revenus
             let depenseTotal = 0;
