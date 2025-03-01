@@ -81,11 +81,13 @@ document.getElementById('transac-form').addEventListener('submit', async functio
       console.log('Transaction ajoutée avec succès :', data);
 
       // Mettre à jour le solde, le revenu et les dépenses
+      /*
+      */
       const formattedBalance = parseFloat(data.currentBalance.toFixed(2));
       document.getElementById('solde').textContent = `${formattedBalance} €`;
       document.getElementById('solde').style.color = data.currentBalance < 0 ? 'red' : data.currentBalance === 0 ? 'grey' : '#28A745';
-      document.getElementById('revenu-total').textContent = `${parseFloat(data.totalIncome.toFixed(2))} €`;
-      document.getElementById('depense-total').textContent = `${parseFloat(data.totalExpense.toFixed(2))} €`;
+      document.getElementById('revenu-total').textContent = `${parseFloat(data.totalIncomeMonth.toFixed(2))} €`;
+      document.getElementById('depense-total').textContent = `${parseFloat(data.totalExpenseMonth.toFixed(2))} €`;
 
       // Mettre à jour les transactions récentes
       const recentTransactionsContainer = document.getElementById('dernieres-transactions');

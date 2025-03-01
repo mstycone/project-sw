@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           let emptyCell = document.createElement("td");
           emptyCell.setAttribute("colspan", 6); // Fusionne les colonnes
           emptyCell.setAttribute("class", "cell-vide");
-          emptyCell.textContent = "Aucune transaction à afficher";
+          emptyCell.textContent = "Aucune transaction à afficher pour cette période";
           emptyRow.appendChild(emptyCell);
           transacList.appendChild(emptyRow);
         };

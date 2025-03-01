@@ -127,13 +127,32 @@ const addTransaction = asyncHandler(async (req, res) => {
 
     try {
         await newTransaction.save();
-        // Calculer les valeurs mises à jour
-        const totalIncome = await Transaction.aggregate([{ $match: { type: 'revenu' } }, { $group: { _id: null, total: { $sum: '$montant' } } }]);
-        const totalExpense = await Transaction.aggregate([{ $match: { type: 'dépense' } }, { $group: { _id: null, total: { $sum: '$montant' } } }]);
+
+        //Initialisation du mois courant
+        const now = new Date();
+        const currentMonth = now.getMonth() + 1;
+
+        /*Calculer les valeurs mises à jour*/
+
+        //Bilan finance 
+        const totalIncomeMonth = await Transaction.aggregate([{ $addFields: {month: { $month: '$date'}}}, { $match: { type: 'revenu', month: currentMonth } }, { $group: { _id: null, total: { $sum: '$montant' } } }]);
+        const totalExpenseMonth = await Transaction.aggregate([{ $addFields: {month: { $month: '$date'}}}, { $match: { type: 'dépense', month: currentMonth } }, { $group: { _id: null, total: { $sum: '$montant' } } }]);
+
+        //Solde 
+        const totalIncome = await Transaction.aggregate([{ $match: { type: 'revenu'} }, { $group: { _id: null, total: { $sum: '$montant' } } }]);
+        const totalExpense = await Transaction.aggregate([{ $match: { type: 'dépense'} }, { $group: { _id: null, total: { $sum: '$montant' } } }]);
         const currentBalance = (totalIncome[0]?.total || 0) - (totalExpense[0]?.total || 0);
 
         // Renvoie les nouvelles valeurs
-        res.status(201).json({ newTransaction, currentBalance, totalIncome: totalIncome[0]?.total || 0, totalExpense: totalExpense[0]?.total || 0 });
+        res.status(201).json({ 
+            newTransaction,
+            currentBalance,
+            totalIncome: totalIncome[0]?.total || 0,
+            totalExpense: totalExpense[0]?.total || 0, 
+            totalIncomeMonth: totalIncomeMonth[0]?.total || 0,
+            totalExpenseMonth: totalExpenseMonth[0]?.total || 0 
+        });
+
     } catch (error) {
         console.error('Erreur de sauvegarde de la transaction:', error); // Log any errors
         res.status(500).json({ message: 'Erreur lors de l\'ajout de la transaction' });
