@@ -101,10 +101,8 @@ Voici un aperçu de l'application :
 1. **Page d'introduction** : 
    <img src="./Wireframe_Projet S3/cap-intro.png">
    
-   
 2. **Page d'accueil (index.html)** :
    <img src="./Wireframe_Projet S3/cap-accueil-pt1.png">
-   
    
 3. **Voir les transactions (transac.html)** :
    1. Tableau des transactions : 
@@ -126,6 +124,3 @@ Les contributions sont les bienvenues ! Si vous souhaitez contribuer à ce proje
 3. Apportez vos modifications et validez-les (`git commit -m 'Add some feature'`).
 4. Poussez vers la branche (`git push origin feature/YourFeature`).
 5. Ouvrez une Pull Request.
-
-## Licence
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
