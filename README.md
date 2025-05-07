@@ -117,10 +117,3 @@ Voici un aperçu de l'application :
 4. **Visualisation des graphiques (visualisation.html)** :
    <img src="./Wireframe_Projet S3/cap-visualisation-new.png">
 
-## Contributions
-Les contributions sont les bienvenues ! Si vous souhaitez contribuer à ce projet, veuillez suivre ces étapes :
-1. Forkez le projet.
-2. Créez une nouvelle branche (`git checkout -b feature/YourFeature`).
-3. Apportez vos modifications et validez-les (`git commit -m 'Add some feature'`).
-4. Poussez vers la branche (`git push origin feature/YourFeature`).
-5. Ouvrez une Pull Request.
